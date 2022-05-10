@@ -16,4 +16,8 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Bachelor.Thesis.Benchmarking\Bachelor.Thesis.Benchmarking.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Repository\" />
+	</ItemGroup>
 </Project>
