@@ -7,6 +7,8 @@ namespace Bachelor.Thesis.Benchmarking.WebApi.Repository;
 
 public class ParametersPrimitiveTwoRepo : IRepository<UserDto>
 {
+    public static string Url = "/api/primitive/two/";
+
     private readonly Dictionary<Guid, UserDto> _users = new ();
 
     public IResult CreateWithFluentValidation(UserDto value)
@@ -17,7 +19,7 @@ public class ParametersPrimitiveTwoRepo : IRepository<UserDto>
 
         _users.Add(Guid.NewGuid(), value);
 
-        return Response.Created($"/{value.Id}", value);
+        return Response.Created($"{Url}{value.Id}", value);
     }
 
     public IResult CreateWithLightValidation(UserDto value)
@@ -29,7 +31,7 @@ public class ParametersPrimitiveTwoRepo : IRepository<UserDto>
 
         _users.Add(Guid.NewGuid(), value);
 
-        return Response.Created($"/{value.Id}", value);
+        return Response.Created($"{Url}{value.Id}", value);
     }
 
     public IResult CreateWithModelValidation(UserDto value)
@@ -41,6 +43,6 @@ public class ParametersPrimitiveTwoRepo : IRepository<UserDto>
 
         _users.Add(Guid.NewGuid(), value);
 
-        return Response.Created($"/{value.Id}", value);
+        return Response.Created($"{Url}{value.Id}", value);
     }
 }
