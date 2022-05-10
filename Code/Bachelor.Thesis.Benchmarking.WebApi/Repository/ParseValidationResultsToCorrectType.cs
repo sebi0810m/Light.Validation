@@ -8,16 +8,46 @@ public static class ParseValidationResultsToCorrectType
 {
     public static ProblemDetails ParseLightValidationResults<T>(ValidationResult<T> validationResult)
     {
-        return new ProblemDetails();
+        var problem = new ProblemDetails
+        {
+            Title = "LightValidation Error",
+            Detail = $"Validation not successful. Look into {nameof(validationResult)}  for further information",
+            Status = 400
+        };
+
+        problem.Extensions.Add(nameof(validationResult),
+                               validationResult.Errors);
+
+        return problem;
     }
 
     public static ProblemDetails ParseFluentValidationResults(ValidationResult validationResult)
     {
-        return new ProblemDetails();
+        var problem = new ProblemDetails
+        {
+            Title = "FluentValidation Error",
+            Detail = $"Validation not successful. Look into {nameof(validationResult)} for further information",
+            Status = 400
+        };
+
+        problem.Extensions.Add(nameof(validationResult),
+                               validationResult.Errors);
+
+        return problem;
     }
 
     public static ProblemDetails ParseModelValidationResults(List<System.ComponentModel.DataAnnotations.ValidationResult> validationResult)
     {
-        return new ProblemDetails();
+        var problem = new ProblemDetails
+        {
+            Title = "ModelValidation Error",
+            Detail = $"Validation not successful. Look into {nameof(validationResult)}  for further information",
+            Status = 400
+        };
+
+        problem.Extensions.Add(nameof(validationResult),
+                               validationResult);
+
+        return problem;
     }
 }
