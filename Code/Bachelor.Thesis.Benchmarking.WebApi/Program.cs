@@ -17,9 +17,9 @@ public class Program
 
         app.MapGet("", () => "Hello World");
 
-        app.MapPost("/api/primitive/two/light", ([FromServices] ParametersPrimitiveTwoRepo repo, UserDto user) => repo.CreateWithFluentValidation(user));
-        app.MapPost("/api/primitive/two/light", ([FromServices] ParametersPrimitiveTwoRepo repo, UserDto user) => repo.CreateWithFluentValidation(user));
-        app.MapPost("/api/primitive/two/light", ([FromServices] ParametersPrimitiveTwoRepo repo, UserDto user) => repo.CreateWithFluentValidation(user));
+        app.MapPost($"{ParametersPrimitiveTwoRepo.Url}light", ([FromServices] ParametersPrimitiveTwoRepo repo, UserDto user) => repo.CreateWithFluentValidation(user));
+        app.MapPost($"{ParametersPrimitiveTwoRepo.Url}fluent", ([FromServices] ParametersPrimitiveTwoRepo repo, UserDto user) => repo.CreateWithFluentValidation(user));
+        app.MapPost($"{ParametersPrimitiveTwoRepo.Url}model", ([FromServices] ParametersPrimitiveTwoRepo repo, UserDto user) => repo.CreateWithFluentValidation(user));
 
         app.Run();
     }
