@@ -1,10 +1,10 @@
 ﻿namespace Bachelor.Thesis.Benchmarking.WebApi.Repository;
 
-public interface IRepository<T>
+public interface IRepository<in T>
 {
-    public T CreateWithFluentValidation(T value);
+    public IResult CreateWithFluentValidation(T value);
 
-    public T CreateWithLightValidation(T value);
+    public IResult CreateWithLightValidation(T value);
 
-    public T CreateWithModelValidation(T value);
+    public IResult CreateWithModelValidation(T value);
 }
