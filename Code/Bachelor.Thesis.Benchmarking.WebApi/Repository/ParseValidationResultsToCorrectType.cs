@@ -16,7 +16,7 @@ public static class ParseValidationResultsToCorrectType
         return new ProblemDetails();
     }
 
-    public static ProblemDetails ParseModelValidationResults(List<ValidationResult> validationResult)
+    public static ProblemDetails ParseModelValidationResults(List<System.ComponentModel.DataAnnotations.ValidationResult> validationResult)
     {
         return new ProblemDetails();
     }
