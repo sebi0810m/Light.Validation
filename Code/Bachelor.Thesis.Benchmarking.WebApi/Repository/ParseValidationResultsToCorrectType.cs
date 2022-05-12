@@ -11,7 +11,7 @@ public static class ParseValidationResultsToCorrectType
         var problem = new ProblemDetails
         {
             Title = "LightValidation Error",
-            Detail = $"Validation not successful. Look into {nameof(validationResult)}  for further information",
+            Detail = $"Validation not successful. Look into {nameof(validationResult)} for further information",
             Status = 400
         };
 
@@ -41,7 +41,7 @@ public static class ParseValidationResultsToCorrectType
         var problem = new ProblemDetails
         {
             Title = "ModelValidation Error",
-            Detail = $"Validation not successful. Look into {nameof(validationResult)}  for further information",
+            Detail = $"Validation not successful. Look into {nameof(validationResult)} for further information",
             Status = 400
         };
 
