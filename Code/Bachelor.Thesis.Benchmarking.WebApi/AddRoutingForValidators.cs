@@ -16,13 +16,4 @@ public static class AddRoutingForValidators
 
         return app;
     }
-
-    /*public static WebApplication AddRoutingForParametersPrimitiveAll(this WebApplication app)
-    {
-        app.MapPost($"{DefaultUrl}light", ([FromServices] ParametersPrimitiveTwoRepo repo, UserDto user) => repo.CreateWithLightValidation(user));
-        app.MapPost($"{DefaultUrl}fluent", ([FromServices] ParametersPrimitiveTwoRepo repo, UserDto user) => repo.CreateWithFluentValidation(user));
-        app.MapPost($"{DefaultUrl}model", ([FromServices] ParametersPrimitiveTwoRepo repo, UserDto user) => repo.CreateWithModelValidation(user));
-
-        return app;
-    }*/
 }
