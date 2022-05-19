@@ -7,13 +7,13 @@ public static class RavenDbConnector
 {
     public static IDocumentStore SetupRavenDbConnection()
     {
-        using var store = new DocumentStore
+        var store = new DocumentStore
         {
             Urls = new[]
             {
                 "http://127.0.0.1:1337/"
             },
-            Database = "Northwind"
+            Database = "BachelorThesis"
         };
 
         store.Initialize();
