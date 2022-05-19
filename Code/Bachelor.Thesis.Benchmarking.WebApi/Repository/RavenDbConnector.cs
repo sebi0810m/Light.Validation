@@ -25,6 +25,7 @@ public static class RavenDbConnector
     {
         using var session = store.OpenSession();
 
+        // the id can't be set for complex object --> read documentation
         session.Store(user);
 
         session.SaveChanges();
