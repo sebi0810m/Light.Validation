@@ -11,7 +11,7 @@ public static class RavenDbConnector
         {
             Urls = new[]
             {
-                "http://127.0.0.1:1337/"
+                "http://127.0.0.1:1340/"
             },
             Database = "BachelorThesis"
         };
@@ -26,6 +26,8 @@ public static class RavenDbConnector
         using var session = store.OpenSession();
 
         session.Store(user);
+
+        session.SaveChanges();
 
         return user;
     }
