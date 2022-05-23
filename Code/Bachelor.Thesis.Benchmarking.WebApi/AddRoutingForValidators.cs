@@ -6,13 +6,13 @@ namespace Bachelor.Thesis.Benchmarking.WebApi;
 
 public static class AddRoutingForValidators
 {
-    private static readonly string DefaultUrl = ParametersPrimitiveTwoRepo.Url;
-
     public static WebApplication AddRoutingForParametersPrimitiveTwo(this WebApplication app)
     {
-        app.MapPost($"{DefaultUrl}light", ([FromServices] ParametersPrimitiveTwoRepo repo, UserDto user) => repo.CreateWithLightValidation(user));
-        app.MapPost($"{DefaultUrl}fluent", ([FromServices] ParametersPrimitiveTwoRepo repo, UserDto user) => repo.CreateWithFluentValidation(user));
-        app.MapPost($"{DefaultUrl}model", ([FromServices] ParametersPrimitiveTwoRepo repo, UserDto user) => repo.CreateWithModelValidation(user));
+        var defaultUrl = ParametersPrimitiveTwoRepo.Url;
+
+        app.MapPost($"{defaultUrl}light", ([FromServices] ParametersPrimitiveTwoRepo repo, UserDto user) => repo.CreateWithLightValidation(user));
+        app.MapPost($"{defaultUrl}fluent", ([FromServices] ParametersPrimitiveTwoRepo repo, UserDto user) => repo.CreateWithFluentValidation(user));
+        app.MapPost($"{defaultUrl}model", ([FromServices] ParametersPrimitiveTwoRepo repo, UserDto user) => repo.CreateWithModelValidation(user));
 
         return app;
     }
