@@ -1,9 +1,10 @@
 ﻿using Bachelor.Thesis.Benchmarking.ParametersPrimitiveTwo;
+using Bachelor.Thesis.Benchmarking.WebApi.Database;
 using Bachelor.Thesis.Benchmarking.WebApi.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Synnotech.Linq2Db;
 
-namespace Bachelor.Thesis.Benchmarking.WebApi.Database;
+namespace Bachelor.Thesis.Benchmarking.WebApi.Startup;
 
 public static class AddUserDtoController
 {
