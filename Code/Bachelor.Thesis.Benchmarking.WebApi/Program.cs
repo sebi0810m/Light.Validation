@@ -1,5 +1,6 @@
 using Bachelor.Thesis.Benchmarking.WebApi.Database;
 using Bachelor.Thesis.Benchmarking.WebApi.Repository;
+using Bachelor.Thesis.Benchmarking.WebApi.Startup;
 using LinqToDB.DataProvider.SqlServer;
 using Synnotech.Linq2Db.MsSqlServer;
 
@@ -12,7 +13,8 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
         builder.Services
                .AddSingleton<ParametersPrimitiveTwoRepo>()
-               .AddLinq2DbForSqlServer(Mappings.CreateMappings, SqlServerProvider.SystemDataSqlClient);
+               .AddLinq2DbForSqlServer(Mappings.CreateMappings, SqlServerProvider.SystemDataSqlClient)
+               .AddServicesForDtoInsertionIntoDatabase();
 
         var app = builder.Build();
 
@@ -20,7 +22,7 @@ public class Program
 
         app.MapGet("", () => "Hello World");
 
-        app.AddRoutingForParametersPrimitiveTwo();
+        app.AddMappingsForDtoInsertionIntoDatabase();
 
         app.Run();
     }
