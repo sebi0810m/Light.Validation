@@ -33,15 +33,15 @@ public class ParametersPrimitiveTwoRepo
     }
 
     public async Task<IResult> CreateWithFluentValidation(
-        [FromServices] ISessionFactory<IAddUserSession> sessionFactory,
-        UserDto value)
+        UserDto value,
+        ISessionFactory<IAddUserSession> sessionFactory)
     {
         var errors = new FluentValidator<UserDto>(new FluentValidator(), value).PerformValidation();
         if (!errors.IsValid)
             return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseFluentValidationResults(errors));
 
         await using var session = await sessionFactory.OpenSessionAsync();
-        value.Id = await session.InsertUserAsync(value);
+        value.Id = await session.InsertUserAsync(value); // TODO: System.Data.SqlClient.SqlException (0x80131904): Invalid object name 'ParametersPrimitiveTwo'.
         await session.SaveChangesAsync();
 
         return Response.Created($"{Url}{value.Id}", value);
