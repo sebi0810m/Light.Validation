@@ -3,7 +3,7 @@ using Synnotech.DatabaseAbstractions;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Database;
 
-public interface IAddUserSession : IAsyncReadOnlySession
+public interface IAddUserSession : IAsyncSession
 {
     public Task<int> InsertUserAsync(UserDto user);
 }

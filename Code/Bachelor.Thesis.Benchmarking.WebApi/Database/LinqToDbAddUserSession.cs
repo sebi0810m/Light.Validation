@@ -5,7 +5,7 @@ using Synnotech.Linq2Db;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Database;
 
-public class LinqToDbAddUserSession : AsyncReadOnlySession, IAddUserSession
+public class LinqToDbAddUserSession : AsyncSession, IAddUserSession
 {
     public LinqToDbAddUserSession(DataConnection dataConnection) : base(dataConnection) { }
 
