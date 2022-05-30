@@ -12,7 +12,7 @@
     "Bachelor.Thesis.Benchmarking.WebApi": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "",
       "applicationUrl": "https://localhost:7089;http://localhost:5089",
       "environmentVariables": {
