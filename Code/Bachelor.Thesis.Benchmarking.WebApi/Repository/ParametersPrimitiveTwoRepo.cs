@@ -8,7 +8,7 @@ using Synnotech.DatabaseAbstractions;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Repository;
 
-public class ParametersPrimitiveTwoRepo : IRepository<UserDto>
+public class ParametersPrimitiveTwoRepo
 {
     public static string Url = "/api/primitive/two/";
 
@@ -41,6 +41,8 @@ public class ParametersPrimitiveTwoRepo : IRepository<UserDto>
             return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseFluentValidationResults(errors));
 
         await using var session = await sessionFactory.OpenSessionAsync();
+        value.Id = await session.InsertUserAsync(value);
+        await session.SaveChangesAsync();
 
         return Response.Created($"{Url}{value.Id}", value);
     }
