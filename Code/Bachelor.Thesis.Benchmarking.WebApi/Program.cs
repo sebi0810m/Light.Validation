@@ -20,8 +20,6 @@ public class Program
 
         app.UseHttpsRedirection();
 
-        app.MapGet("", () => "Hello World");
-
         app.AddMappingsForDtoInsertionIntoDatabase();
 
         app.Run();
