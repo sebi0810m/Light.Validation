@@ -9,7 +9,7 @@ namespace Bachelor.Thesis.Benchmarking.WebApi.Repository;
 
 public class ParametersPrimitiveTwoRepo
 {
-    public static string Url = "/api/primitive/two/";
+    private const string Url = "/api/primitive/two/";
 
     public async Task<IResult> CreateWithLightValidation(
         UserDto value,
@@ -20,7 +20,7 @@ public class ParametersPrimitiveTwoRepo
         if (!errors.IsValid)
             return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseLightValidationResults(errors));
 
-        await InsertUserIntoDatabase(value, sessionFactory);
+        value = await InsertUserIntoDatabase(value, sessionFactory);
 
         return Response.Created($"{Url}{value.Id}", value);
     }
@@ -34,7 +34,7 @@ public class ParametersPrimitiveTwoRepo
         if (errors.Count != 0)
             return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseModelValidationResults(errors));
 
-        await InsertUserIntoDatabase(value, sessionFactory);
+        value = await InsertUserIntoDatabase(value, sessionFactory);
 
         return Response.Created($"{Url}{value.Id}", value);
     }
@@ -48,7 +48,7 @@ public class ParametersPrimitiveTwoRepo
         if (!errors.IsValid)
             return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseFluentValidationResults(errors));
 
-        await InsertUserIntoDatabase(value, sessionFactory);
+        value = await InsertUserIntoDatabase(value, sessionFactory);
 
         return Response.Created($"{Url}{value.Id}", value);
     }
