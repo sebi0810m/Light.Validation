@@ -2,17 +2,18 @@
 using Bachelor.Thesis.Benchmarking.ParametersPrimitiveTwo.Validators;
 using Bachelor.Thesis.Benchmarking.WebApi.Database;
 using Bachelor.Thesis.Benchmarking.WebApi.Validation;
-using Microsoft.AspNetCore.Mvc;
 using Synnotech.AspNetCore.MinimalApis.Responses;
 using Synnotech.DatabaseAbstractions;
 
-namespace Bachelor.Thesis.Benchmarking.WebApi.Repository;
+namespace Bachelor.Thesis.Benchmarking.WebApi.Repository.ParametersPrimitiveTwo;
 
 public class ParametersPrimitiveTwoRepo
 {
     public static string Url = "/api/primitive/two/";
 
-    public IResult CreateWithLightValidation(UserDto value)
+    public IResult CreateWithLightValidation(
+        UserDto value,
+        ISessionFactory<IAddUserSession> sessionFactory)
     {
         var errors = new LightValidator<UserDto>(new LightValidator(), value).PerformValidation();
 
@@ -22,7 +23,9 @@ public class ParametersPrimitiveTwoRepo
         return Response.Created($"{Url}{value.Id}", value);
     }
 
-    public IResult CreateWithModelValidation(UserDto value)
+    public IResult CreateWithModelValidation(
+        UserDto value,
+        ISessionFactory<IAddUserSession> sessionFactory)
     {
         var errors = new ModelValidator<UserDto>(value).PerformValidation();
 
@@ -41,7 +44,7 @@ public class ParametersPrimitiveTwoRepo
             return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseFluentValidationResults(errors));
 
         await using var session = await sessionFactory.OpenSessionAsync();
-        value.Id = await session.InsertUserAsync(value); // TODO: System.Data.SqlClient.SqlException (0x80131904): Invalid object name 'ParametersPrimitiveTwo'.
+        value.Id = await session.InsertUserAsync(value);
         await session.SaveChangesAsync();
 
         return Response.Created($"{Url}{value.Id}", value);
