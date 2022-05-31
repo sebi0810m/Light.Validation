@@ -1,6 +1,7 @@
 ﻿using Bachelor.Thesis.Benchmarking.ParametersPrimitiveTwo;
 using Bachelor.Thesis.Benchmarking.WebApi.Database;
 using Bachelor.Thesis.Benchmarking.WebApi.Repository;
+using Bachelor.Thesis.Benchmarking.WebApi.Repository.ParametersPrimitiveTwo;
 using Microsoft.AspNetCore.Mvc;
 using Synnotech.DatabaseAbstractions;
 using Synnotech.Linq2Db;
@@ -16,12 +17,18 @@ public static class AddUserDtoController
     {
         var defaultUrl = ParametersPrimitiveTwoRepo.Url;
 
-        app.MapPost($"{defaultUrl}light", ([FromServices] ParametersPrimitiveTwoRepo repo, UserDto user) => repo.CreateWithLightValidation(user));
+        app.MapPost($"{defaultUrl}light", (
+                        [FromServices] ParametersPrimitiveTwoRepo repo,
+                        [FromServices] ISessionFactory<IAddUserSession> sessionFactory,
+                        [FromBody] UserDto user) => repo.CreateWithLightValidation(user, sessionFactory));
         app.MapPost($"{defaultUrl}fluent", (
                         [FromServices] ParametersPrimitiveTwoRepo repo,
                         [FromServices] ISessionFactory<IAddUserSession> sessionFactory,
-                        UserDto user) => repo.CreateWithFluentValidation(user, sessionFactory));
-        app.MapPost($"{defaultUrl}model", ([FromServices] ParametersPrimitiveTwoRepo repo, UserDto user) => repo.CreateWithModelValidation(user));
+                        [FromBody] UserDto user) => repo.CreateWithFluentValidation(user, sessionFactory));
+        app.MapPost($"{defaultUrl}model", (
+                        [FromServices] ParametersPrimitiveTwoRepo repo,
+                        [FromServices] ISessionFactory<IAddUserSession> sessionFactory,
+                        [FromBody] UserDto user) => repo.CreateWithModelValidation(user, sessionFactory));
 
         return app;
     }
