@@ -11,7 +11,7 @@ public class ParametersPrimitiveTwoRepo
 {
     public static string Url = "/api/primitive/two/";
 
-    public IResult CreateWithLightValidation(
+    public async Task<IResult> CreateWithLightValidation(
         UserDto value,
         ISessionFactory<IAddUserSession> sessionFactory)
     {
@@ -20,10 +20,12 @@ public class ParametersPrimitiveTwoRepo
         if (!errors.IsValid)
             return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseLightValidationResults(errors));
 
+        await InsertUserIntoDatabase(value, sessionFactory);
+
         return Response.Created($"{Url}{value.Id}", value);
     }
 
-    public IResult CreateWithModelValidation(
+    public async Task<IResult> CreateWithModelValidation(
         UserDto value,
         ISessionFactory<IAddUserSession> sessionFactory)
     {
@@ -32,6 +34,8 @@ public class ParametersPrimitiveTwoRepo
         if (errors.Count != 0)
             return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseModelValidationResults(errors));
 
+        await InsertUserIntoDatabase(value, sessionFactory);
+
         return Response.Created($"{Url}{value.Id}", value);
     }
 
@@ -39,14 +43,21 @@ public class ParametersPrimitiveTwoRepo
         UserDto value,
         ISessionFactory<IAddUserSession> sessionFactory)
     {
+        // TODO: ID is already included in request value => needed for validator, but is replaced in database call
         var errors = new FluentValidator<UserDto>(new FluentValidator(), value).PerformValidation();
         if (!errors.IsValid)
             return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseFluentValidationResults(errors));
 
+        await InsertUserIntoDatabase(value, sessionFactory);
+
+        return Response.Created($"{Url}{value.Id}", value);
+    }
+
+    private async Task<UserDto> InsertUserIntoDatabase(UserDto value, ISessionFactory<IAddUserSession> sessionFactory)
+    {
         await using var session = await sessionFactory.OpenSessionAsync();
         value.Id = await session.InsertUserAsync(value);
         await session.SaveChangesAsync();
-
-        return Response.Created($"{Url}{value.Id}", value);
+        return value;
     }
 }
