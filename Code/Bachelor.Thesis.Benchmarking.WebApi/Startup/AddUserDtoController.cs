@@ -1,7 +1,6 @@
 ﻿using Bachelor.Thesis.Benchmarking.ParametersPrimitiveTwo;
 using Bachelor.Thesis.Benchmarking.WebApi.Database;
 using Bachelor.Thesis.Benchmarking.WebApi.Repository;
-using Bachelor.Thesis.Benchmarking.WebApi.Repository.ParametersPrimitiveTwo;
 using Microsoft.AspNetCore.Mvc;
 using Synnotech.DatabaseAbstractions;
 using Synnotech.Linq2Db;

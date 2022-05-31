@@ -5,7 +5,7 @@ using Bachelor.Thesis.Benchmarking.WebApi.Validation;
 using Synnotech.AspNetCore.MinimalApis.Responses;
 using Synnotech.DatabaseAbstractions;
 
-namespace Bachelor.Thesis.Benchmarking.WebApi.Repository.ParametersPrimitiveTwo;
+namespace Bachelor.Thesis.Benchmarking.WebApi.Repository;
 
 public class ParametersPrimitiveTwoRepo
 {
