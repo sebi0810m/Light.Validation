@@ -60,4 +60,6 @@ public class ParametersPrimitiveTwoRepo
         await session.SaveChangesAsync();
         return value;
     }
+
+    // TODO: add simple api call to get data -> /api/primitive/two/{id}
 }
