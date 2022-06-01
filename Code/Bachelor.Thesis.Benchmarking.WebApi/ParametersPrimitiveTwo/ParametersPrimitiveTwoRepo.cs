@@ -53,7 +53,7 @@ public class ParametersPrimitiveTwoRepo
         return Response.Created($"{Url}{value.Id}", value);
     }
 
-    public async Task<IResult> GetUserWithId(
+    public async Task<IResult> GetUserById(
         int id,
         ISessionFactory<IAddUserSession> sessionFactory)
     {
