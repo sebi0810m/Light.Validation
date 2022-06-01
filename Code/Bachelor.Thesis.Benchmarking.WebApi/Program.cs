@@ -14,7 +14,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
         builder.Services
                .AddSingleton<ParametersPrimitiveTwoRepo>()
-               .AddLinq2DbForSqlServer(Mappings.CreateMappings, SqlServerProvider.SystemDataSqlClient)
+               .AddLinq2DbForSqlServer(Mappings.AddMappingsForEntities, SqlServerProvider.SystemDataSqlClient)
                .AddServicesForDtoInsertionIntoDatabase();
 
         var app = builder.Build();

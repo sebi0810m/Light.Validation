@@ -6,7 +6,7 @@ namespace Bachelor.Thesis.Benchmarking.WebApi.Database;
 
 public static class Mappings
 {
-    public static void CreateMappings(this MappingSchema schema)
+    public static void AddMappingsForEntities(this MappingSchema schema)
     {
         var mappingBuilder = schema.GetFluentMappingBuilder();
 
