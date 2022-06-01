@@ -55,7 +55,7 @@ public class ParametersPrimitiveTwoRepo
 
     public async Task<IResult> GetUserById(
         int id,
-        ISessionFactory<IAddUserSession> sessionFactory)
+        ISessionFactory<IGetUserSession> sessionFactory)
     {
         await using var session = await sessionFactory.OpenSessionAsync();
 
