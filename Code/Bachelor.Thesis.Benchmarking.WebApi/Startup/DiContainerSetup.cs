@@ -6,6 +6,6 @@ public static class DiContainerSetup
 {
     public static IServiceCollection AddServicesForDtoInsertionIntoDatabase(this IServiceCollection services)
     {
-        return services.AddInsertUserDto();
+        return services.AddUserDtoServices();
     }
 }

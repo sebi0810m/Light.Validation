@@ -6,6 +6,6 @@ public static class MappingSetup
 {
     public static WebApplication AddMappingsForDtoInsertionIntoDatabase(this WebApplication app)
     {
-        return app.MapInsertUserDto();
+        return app.MapUserDtoEndpoints();
     }
 }

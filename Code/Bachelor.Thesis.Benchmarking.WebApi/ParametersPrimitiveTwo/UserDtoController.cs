@@ -7,11 +7,11 @@ namespace Bachelor.Thesis.Benchmarking.WebApi.ParametersPrimitiveTwo;
 
 public static class UserDtoController
 {
-    public static IServiceCollection AddInsertUserDto(this IServiceCollection services) =>
+    public static IServiceCollection AddUserDtoServices(this IServiceCollection services) =>
         services.AddSessionFactoryFor<IAddUserSession, LinqToDbAddUserSession>()
                 .AddSessionFactoryFor<IGetUserSession, LinqToDbGetUserSession>();
 
-    public static WebApplication MapInsertUserDto(this WebApplication app)
+    public static WebApplication MapUserDtoEndpoints(this WebApplication app)
     {
         var defaultUrl = ParametersPrimitiveTwoRepo.Url;
 
