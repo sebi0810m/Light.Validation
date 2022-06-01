@@ -15,18 +15,23 @@ public static class UserDtoController
     {
         var defaultUrl = ParametersPrimitiveTwoRepo.Url;
 
-        app.MapPost($"{defaultUrl}light", (
+        app.MapPost($"{defaultUrl}light", async (
                         [FromServices] ParametersPrimitiveTwoRepo repo,
                         [FromServices] ISessionFactory<IAddUserSession> sessionFactory,
-                        [FromBody] UserDto user) => repo.CreateWithLightValidation(user, sessionFactory));
-        app.MapPost($"{defaultUrl}fluent", (
+                        [FromBody] UserDto user) => await repo.CreateWithLightValidation(user, sessionFactory));
+        app.MapPost($"{defaultUrl}fluent", async (
                         [FromServices] ParametersPrimitiveTwoRepo repo,
                         [FromServices] ISessionFactory<IAddUserSession> sessionFactory,
-                        [FromBody] UserDto user) => repo.CreateWithFluentValidation(user, sessionFactory));
-        app.MapPost($"{defaultUrl}model", (
+                        [FromBody] UserDto user) => await repo.CreateWithFluentValidation(user, sessionFactory));
+        app.MapPost($"{defaultUrl}model", async (
                         [FromServices] ParametersPrimitiveTwoRepo repo,
                         [FromServices] ISessionFactory<IAddUserSession> sessionFactory,
-                        [FromBody] UserDto user) => repo.CreateWithModelValidation(user, sessionFactory));
+                        [FromBody] UserDto user) => await repo.CreateWithModelValidation(user, sessionFactory));
+
+        app.MapGet(defaultUrl + "{id}", async (
+                       [FromServices] ParametersPrimitiveTwoRepo repo,
+                       [FromServices] ISessionFactory<IGetUserSession> sessionFactory,
+                       int id) => await repo.GetUserById(id, sessionFactory));
 
         return app;
     }
