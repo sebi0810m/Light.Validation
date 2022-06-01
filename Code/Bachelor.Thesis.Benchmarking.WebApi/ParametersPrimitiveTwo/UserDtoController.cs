@@ -5,7 +5,7 @@ using Synnotech.Linq2Db;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.ParametersPrimitiveTwo;
 
-public static class AddUserDtoController
+public static class UserDtoController
 {
     public static IServiceCollection AddInsertUserDto(this IServiceCollection services) =>
         services.AddSessionFactoryFor<IAddUserSession, LinqToDbAddUserSession>();
