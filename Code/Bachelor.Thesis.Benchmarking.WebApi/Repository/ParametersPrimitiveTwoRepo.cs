@@ -43,7 +43,7 @@ public class ParametersPrimitiveTwoRepo
         UserDto value,
         ISessionFactory<IAddUserSession> sessionFactory)
     {
-        // TODO: ID is already included in request value => needed for validator, but is replaced in database call
+        // ID is already included in request value => needed for validator, but is replaced in database call
         var errors = new FluentValidator<UserDto>(new FluentValidator(), value).PerformValidation();
         if (!errors.IsValid)
             return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseFluentValidationResults(errors));
@@ -53,6 +53,23 @@ public class ParametersPrimitiveTwoRepo
         return Response.Created($"{Url}{value.Id}", value);
     }
 
+    public async Task<IResult> GetUserWithId(
+        int id,
+        ISessionFactory<IAddUserSession> sessionFactory)
+    {
+        await using var session = await sessionFactory.OpenSessionAsync();
+
+        // TODO: search for user with Id in Database
+        var value = new UserDto()
+        {
+            Id = id
+        };
+
+        // TODO: handle case where no user is found
+
+        return Response.Ok(value);
+    }
+
     private async Task<UserDto> InsertUserIntoDatabase(UserDto value, ISessionFactory<IAddUserSession> sessionFactory)
     {
         await using var session = await sessionFactory.OpenSessionAsync();
@@ -60,6 +77,4 @@ public class ParametersPrimitiveTwoRepo
         await session.SaveChangesAsync();
         return value;
     }
-
-    // TODO: add simple api call to get data -> /api/primitive/two/{id}
 }
