@@ -1,4 +1,6 @@
-﻿namespace Bachelor.Thesis.Benchmarking.WebApi.Startup;
+﻿using Bachelor.Thesis.Benchmarking.WebApi.Controller;
+
+namespace Bachelor.Thesis.Benchmarking.WebApi.Startup;
 
 public static class DiContainerSetup
 {
