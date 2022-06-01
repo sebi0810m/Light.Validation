@@ -9,7 +9,7 @@ namespace Bachelor.Thesis.Benchmarking.WebApi.Repository;
 
 public class ParametersPrimitiveTwoRepo
 {
-    private const string Url = "/api/primitive/two/";
+    public const string Url = "/api/primitive/two/";
 
     public async Task<IResult> CreateWithLightValidation(
         UserDto value,
