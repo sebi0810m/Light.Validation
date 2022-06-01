@@ -54,18 +54,15 @@ public class ParametersPrimitiveTwoRepo
     }
 
     public async Task<IResult> GetUserById(
-        int id,
+        int userId,
         ISessionFactory<IGetUserSession> sessionFactory)
     {
         await using var session = await sessionFactory.OpenSessionAsync();
 
-        // TODO: search for user with Id in Database
-        var value = new UserDto()
-        {
-            Id = id
-        };
+        var value = await session.GetUserByIdAsync(userId);
 
-        // TODO: handle case where no user is found
+        if (value == null)
+            return Response.NotFound();
 
         return Response.Ok(value);
     }
