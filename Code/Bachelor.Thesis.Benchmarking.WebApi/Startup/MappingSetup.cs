@@ -1,4 +1,4 @@
-﻿using Bachelor.Thesis.Benchmarking.WebApi.Controller;
+﻿using Bachelor.Thesis.Benchmarking.WebApi.ParametersPrimitiveTwo;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Startup;
 

@@ -1,4 +1,5 @@
 using Bachelor.Thesis.Benchmarking.WebApi.Database;
+using Bachelor.Thesis.Benchmarking.WebApi.ParametersPrimitiveTwo;
 using Bachelor.Thesis.Benchmarking.WebApi.Repository;
 using Bachelor.Thesis.Benchmarking.WebApi.Startup;
 using LinqToDB.DataProvider.SqlServer;

@@ -1,9 +1,10 @@
 ﻿using Bachelor.Thesis.Benchmarking.ParametersPrimitiveTwo;
+using Bachelor.Thesis.Benchmarking.WebApi.Database;
 using LinqToDB;
 using LinqToDB.Data;
 using Synnotech.Linq2Db;
 
-namespace Bachelor.Thesis.Benchmarking.WebApi.Database;
+namespace Bachelor.Thesis.Benchmarking.WebApi.ParametersPrimitiveTwo;
 
 public class LinqToDbAddUserSession : AsyncSession, IAddUserSession
 {

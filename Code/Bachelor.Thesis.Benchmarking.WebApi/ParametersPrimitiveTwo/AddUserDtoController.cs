@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Synnotech.DatabaseAbstractions;
 using Synnotech.Linq2Db;
 
-namespace Bachelor.Thesis.Benchmarking.WebApi.Controller;
+namespace Bachelor.Thesis.Benchmarking.WebApi.ParametersPrimitiveTwo;
 
 public static class AddUserDtoController
 {
