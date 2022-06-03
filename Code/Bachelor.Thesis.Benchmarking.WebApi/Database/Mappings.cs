@@ -36,19 +36,21 @@ public static class Mappings
         // ParametersComplexTwo
         mappingBuilder.Entity<CustomerDto>()
                       .HasTableName("ParametersComplexTwo")
+                      .Property(customer => customer.CustomerId).IsIdentity().IsPrimaryKey()
                       .Property(customer => customer.Address).IsNullable(false)
-                      .Property(customer => customer.User).IsNullable(false)
-                      .Property(customer => customer.User.UserName).IsPrimaryKey();
-        
+                      .Property(customer => customer.User).IsNullable(false);
+
         // CollectionFlat
         mappingBuilder.Entity<CollectionFlatDto>()
                       .HasTableName("CollectionFlat")
+                      .Property(collection => collection.Id).IsIdentity().IsPrimaryKey()
                       .Property(collection => collection.Names).IsNullable(false)
                       .Property(collection => collection.Availability).IsNullable(false);
 
         // CollectionComplex
         mappingBuilder.Entity<CollectionComplexDto>()
                       .HasTableName("CollectionComplex")
+                      .Property(collection => collection.Id).IsIdentity().IsPrimaryKey()
                       .Property(collection => collection.OrderDetailsList).IsNullable(false)
                       .Property(collection => collection.ArticleList).IsNullable(false);
     }
