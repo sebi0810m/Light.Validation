@@ -7,39 +7,11 @@ using Synnotech.DatabaseAbstractions;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.ParametersPrimitiveTwo;
 
-public class ParametersPrimitiveTwoRepo
+public class ParametersPrimitiveTwoRepo : IRepository<UserDto, IAddUserSession, IGetUserSession>
 {
     public const string Url = "/api/primitive/two/";
 
-    public async Task<IResult> CreateWithLightValidation(
-        UserDto value,
-        ISessionFactory<IAddUserSession> sessionFactory)
-    {
-        var errors = new LightValidator<UserDto>(new LightValidator(), value).PerformValidation();
-
-        if (!errors.IsValid)
-            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseLightValidationResults(errors));
-
-        value = await InsertUserIntoDatabase(value, sessionFactory);
-
-        return Response.Created($"{Url}{value.Id}", value);
-    }
-
-    public async Task<IResult> CreateWithModelValidation(
-        UserDto value,
-        ISessionFactory<IAddUserSession> sessionFactory)
-    {
-        var errors = new ModelValidator<UserDto>(value).PerformValidation();
-
-        if (errors.Count != 0)
-            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseModelValidationResults(errors));
-
-        value = await InsertUserIntoDatabase(value, sessionFactory);
-
-        return Response.Created($"{Url}{value.Id}", value);
-    }
-
-    public async Task<IResult> CreateWithFluentValidation(
+    public async Task<IResult> CreateWithFluentValidationAsync(
         UserDto value,
         ISessionFactory<IAddUserSession> sessionFactory)
     {
@@ -53,7 +25,35 @@ public class ParametersPrimitiveTwoRepo
         return Response.Created($"{Url}{value.Id}", value);
     }
 
-    public async Task<IResult> GetUserById(
+    public async Task<IResult> CreateWithModelValidationAsync(
+        UserDto value,
+        ISessionFactory<IAddUserSession> sessionFactory)
+    {
+        var errors = new ModelValidator<UserDto>(value).PerformValidation();
+
+        if (errors.Count != 0)
+            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseModelValidationResults(errors));
+
+        value = await InsertUserIntoDatabase(value, sessionFactory);
+
+        return Response.Created($"{Url}{value.Id}", value);
+    }
+
+    public async Task<IResult> CreateWithLightValidationAsync(
+        UserDto value,
+        ISessionFactory<IAddUserSession> sessionFactory)
+    {
+        var errors = new LightValidator<UserDto>(new LightValidator(), value).PerformValidation();
+
+        if (!errors.IsValid)
+            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseLightValidationResults(errors));
+
+        value = await InsertUserIntoDatabase(value, sessionFactory);
+
+        return Response.Created($"{Url}{value.Id}", value);
+    }
+
+    public async Task<IResult> GetObjectByIdAsync(
         int userId,
         ISessionFactory<IGetUserSession> sessionFactory)
     {
