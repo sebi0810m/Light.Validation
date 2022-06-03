@@ -6,15 +6,20 @@ public class CustomerDto : IValidatableObject
 {
     public static CustomerDto ValidCustomerDto = new()
     {
+        CustomerId = Guid.NewGuid(),
         User = User.ValidUser, 
         Address = Address.ValidAddress
     };
 
     public static CustomerDto InvalidCustomerDto = new()
     {
+        CustomerId = Guid.NewGuid(),
         User = User.InvalidUser, 
         Address = Address.InvalidAddress
     };
+
+    [Required]
+    public Guid CustomerId { get; set; } 
 
     [Required]
     public User User { get; set; } = new ();
