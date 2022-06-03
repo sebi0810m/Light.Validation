@@ -6,6 +6,7 @@ public class CollectionComplexDto : IValidatableObject
 {
     public static CollectionComplexDto ValidDto = new ()
     {
+        Id = Guid.NewGuid(),
         OrderDetailsList = new ()
         {
             OrderDetails.ValidOrderDetails,
@@ -24,6 +25,7 @@ public class CollectionComplexDto : IValidatableObject
 
     public static CollectionComplexDto InvalidDto = new ()
     {
+        Id = Guid.NewGuid(),
         OrderDetailsList = new ()
         {
             OrderDetails.InvalidOrderDetails,
@@ -42,6 +44,9 @@ public class CollectionComplexDto : IValidatableObject
             Article.InvalidArticle
         }
     };
+
+    [Required]
+    public Guid Id { get; set; }
 
     [Required]
     [MinLength(1), MaxLength(10)]
