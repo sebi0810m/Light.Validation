@@ -7,6 +7,7 @@ namespace Bachelor.Thesis.Benchmarking.WebApi.ParametersPrimitiveAll;
 public class ParametersPrimitiveAllRepo : IRepository<EmployeeDto, IAddEmployeeSession, IGetEmployeeSession>
 {
     public const string Url = "/api/primitive/all/";
+
     public Task<IResult> CreateWithFluentValidationAsync(EmployeeDto value, ISessionFactory<IAddEmployeeSession> sessionFactory)
     {
         throw new NotImplementedException();
