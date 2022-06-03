@@ -1,10 +1,14 @@
-﻿namespace Bachelor.Thesis.Benchmarking.WebApi.Repository;
+﻿using Synnotech.DatabaseAbstractions;
 
-public interface IRepository<in T>
+namespace Bachelor.Thesis.Benchmarking.WebApi.Repository;
+
+public interface IRepository<in T, TInsertObjectSession, TGetObjectSession>
 {
-    public IResult CreateWithFluentValidation(T value);
+    Task<IResult> CreateWithFluentValidationAsync(T value, ISessionFactory<TInsertObjectSession> sessionFactory);
 
-    public IResult CreateWithLightValidation(T value);
+    Task<IResult> CreateWithLightValidationAsync(T value, ISessionFactory<TInsertObjectSession> sessionFactory);
 
-    public IResult CreateWithModelValidation(T value);
+    Task<IResult> CreateWithModelValidationAsync(T value, ISessionFactory<TInsertObjectSession> sessionFactory);
+
+    Task<IResult> GetObjectByIdAsync(int id, ISessionFactory<TGetObjectSession> sessionFactory);
 }
