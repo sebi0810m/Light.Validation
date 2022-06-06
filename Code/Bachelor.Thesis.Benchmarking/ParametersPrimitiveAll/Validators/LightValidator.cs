@@ -10,8 +10,6 @@ public class LightValidator : Validator<EmployeeDto>
 
     protected override EmployeeDto PerformValidation(ValidationContext context, EmployeeDto employeeDto)
     {
-        employeeDto.Id = context.Check(employeeDto.Id)
-                                .IsNotEmpty();
         employeeDto.Name = context.Check(employeeDto.Name)
                                   .IsNotNullOrWhiteSpace()
                                   .HasLengthIn(Range.FromInclusive(2).ToInclusive(80));

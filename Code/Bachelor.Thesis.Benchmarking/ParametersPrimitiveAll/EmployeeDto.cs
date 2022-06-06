@@ -32,7 +32,6 @@ public class EmployeeDto
         DateEmployed = new DateTime(2023, 01, 01)
     };
 
-    [Required]
     public Guid Id { get; set; }
 
     [Required]
