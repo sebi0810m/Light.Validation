@@ -18,7 +18,6 @@ public class CustomerDto : IValidatableObject
         Address = Address.InvalidAddress
     };
 
-    [Required]
     public Guid CustomerId { get; set; } 
 
     [Required]
