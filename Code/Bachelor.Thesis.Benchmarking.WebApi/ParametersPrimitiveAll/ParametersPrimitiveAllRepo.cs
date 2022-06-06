@@ -40,7 +40,7 @@ public class ParametersPrimitiveAllRepo : IRepository<EmployeeDto, IAddEmployeeS
     private async Task<EmployeeDto> InsertEmployeeIntoDatabase(EmployeeDto value, ISessionFactory<IAddEmployeeSession> sessionFactory)
     {
         await using var session = await sessionFactory.OpenSessionAsync();
-        value.Id = await session.InsertEmployeeAsync(value);
+        value.Id = (Guid) await session.InsertEmployeeAsync(value);
         await session.SaveChangesAsync();
         return value;
     }

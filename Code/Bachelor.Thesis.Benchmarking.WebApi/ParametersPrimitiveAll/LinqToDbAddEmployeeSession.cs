@@ -10,8 +10,8 @@ public class LinqToDbAddEmployeeSession : AsyncSession, IAddEmployeeSession
 {
     public LinqToDbAddEmployeeSession(DataConnection dataConnection) : base(dataConnection) { }
 
-    public Task<Guid> InsertEmployeeAsync(EmployeeDto employee)
+    public Task<object> InsertEmployeeAsync(EmployeeDto employee)
     {
-        return DataConnection.InsertWithIdentityAsync(employee).ContinueWith(task => (Guid) task.Result);
+        return DataConnection.InsertWithIdentityAsync(employee);
     }
 }
