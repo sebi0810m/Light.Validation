@@ -8,7 +8,8 @@ namespace Bachelor.Thesis.Benchmarking.WebApi.ParametersPrimitiveTwo;
 public static class UserDtoController
 {
     public static IServiceCollection AddUserDtoServices(this IServiceCollection services) =>
-        services.AddSessionFactoryFor<IAddUserSession, LinqToDbAddUserSession>()
+        services.AddSingleton<ParametersPrimitiveTwoRepo>()
+                .AddSessionFactoryFor<IAddUserSession, LinqToDbAddUserSession>()
                 .AddSessionFactoryFor<IGetUserSession, LinqToDbGetUserSession>();
 
     public static WebApplication MapUserDtoEndpoints(this WebApplication app)

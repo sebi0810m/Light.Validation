@@ -8,7 +8,8 @@ namespace Bachelor.Thesis.Benchmarking.WebApi.ParametersPrimitiveAll;
 public static class EmployeeDtoController
 {
     public static IServiceCollection AddEmployeeDtoServices(this IServiceCollection services) =>
-        services.AddSessionFactoryFor<IAddEmployeeSession, LinqToDbAddEmployeeSession>();
+        services.AddSingleton<ParametersPrimitiveAllRepo>()
+                .AddSessionFactoryFor<IAddEmployeeSession, LinqToDbAddEmployeeSession>();
 
     public static WebApplication AddEmployeeDtoEndpoints(this WebApplication app)
     {
