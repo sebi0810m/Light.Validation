@@ -4,9 +4,9 @@ namespace Bachelor.Thesis.Benchmarking.WebApi.Repository;
 
 public interface IRepository<in T, TInsertObjectSession, TGetObjectSession>
 {
-    Task<IResult> CreateWithFluentValidationAsync(T value, ISessionFactory<TInsertObjectSession> sessionFactory);
-
     Task<IResult> CreateWithLightValidationAsync(T value, ISessionFactory<TInsertObjectSession> sessionFactory);
+
+    Task<IResult> CreateWithFluentValidationAsync(T value, ISessionFactory<TInsertObjectSession> sessionFactory);
 
     Task<IResult> CreateWithModelValidationAsync(T value, ISessionFactory<TInsertObjectSession> sessionFactory);
 

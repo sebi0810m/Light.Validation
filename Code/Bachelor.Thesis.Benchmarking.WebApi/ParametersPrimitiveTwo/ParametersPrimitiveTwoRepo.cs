@@ -11,11 +11,24 @@ public class ParametersPrimitiveTwoRepo : IRepository<UserDto, IAddUserSession, 
 {
     public const string Url = "/api/primitive/two/";
 
+    public async Task<IResult> CreateWithLightValidationAsync(
+        UserDto value,
+        ISessionFactory<IAddUserSession> sessionFactory)
+    {
+        var errors = new LightValidator<UserDto>(new LightValidator(), value).PerformValidation();
+
+        if (!errors.IsValid)
+            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseLightValidationResults(errors));
+
+        value = await InsertUserIntoDatabase(value, sessionFactory);
+
+        return Response.Created($"{Url}{value.Id}", value);
+    }
+
     public async Task<IResult> CreateWithFluentValidationAsync(
         UserDto value,
         ISessionFactory<IAddUserSession> sessionFactory)
     {
-        // ID is already included in request value => needed for validator, but is replaced in database call
         var errors = new FluentValidator<UserDto>(new FluentValidator(), value).PerformValidation();
         if (!errors.IsValid)
             return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseFluentValidationResults(errors));
@@ -33,20 +46,6 @@ public class ParametersPrimitiveTwoRepo : IRepository<UserDto, IAddUserSession, 
 
         if (errors.Count != 0)
             return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseModelValidationResults(errors));
-
-        value = await InsertUserIntoDatabase(value, sessionFactory);
-
-        return Response.Created($"{Url}{value.Id}", value);
-    }
-
-    public async Task<IResult> CreateWithLightValidationAsync(
-        UserDto value,
-        ISessionFactory<IAddUserSession> sessionFactory)
-    {
-        var errors = new LightValidator<UserDto>(new LightValidator(), value).PerformValidation();
-
-        if (!errors.IsValid)
-            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseLightValidationResults(errors));
 
         value = await InsertUserIntoDatabase(value, sessionFactory);
 
