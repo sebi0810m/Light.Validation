@@ -1,5 +1,4 @@
-﻿using System.Data;
-using Bachelor.Thesis.Benchmarking.ParametersPrimitiveAll;
+﻿using Bachelor.Thesis.Benchmarking.ParametersPrimitiveAll;
 using LinqToDB;
 using LinqToDB.Data;
 using Synnotech.Linq2Db;
