@@ -7,7 +7,7 @@ using Synnotech.DatabaseAbstractions;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.ParametersPrimitiveTwo;
 
-public class ParametersPrimitiveTwoRepo : IRepository<UserDto, IAddUserSession, IGetUserSession>
+public class ParametersPrimitiveTwoRepo : IRepository<UserDto, int, IAddUserSession, IGetUserSession>
 {
     public const string Url = "/api/primitive/two/";
 
