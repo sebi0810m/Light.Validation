@@ -1,8 +1,7 @@
-﻿using System.Data;
-using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.Dto;
-using Bachelor.Thesis.Benchmarking.WebApi.Database;
+﻿using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.Dto;
 using LinqToDB;
 using LinqToDB.Data;
+using Newtonsoft.Json;
 using Synnotech.Linq2Db;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.ParametersComplexTwo;
@@ -16,16 +15,16 @@ public class LinqToDbAddCustomerSession : AsyncSession, IAddCustomerSession
         var serializedCustomer = new NewCustomerDto
         {
             CustomerId = customer.CustomerId,
-            User = Newtonsoft.Json.JsonConvert.SerializeObject(customer.User),
-            Address = Newtonsoft.Json.JsonConvert.SerializeObject(customer.Address)
+            User = JsonConvert.SerializeObject(customer.User),
+            Address = JsonConvert.SerializeObject(customer.Address)
         };
 
         // TestCode for deserializer -> does it work?
         var deserializedCustomer = new CustomerDto
         {
             CustomerId = serializedCustomer.CustomerId,
-            User = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(serializedCustomer.User),
-            Address = Newtonsoft.Json.JsonConvert.DeserializeObject<Address>(serializedCustomer.Address)
+            User = JsonConvert.DeserializeObject<User>(serializedCustomer.User),
+            Address = JsonConvert.DeserializeObject<Address>(serializedCustomer.Address)
         };
 
         Console.WriteLine("\n\nOriginal Customer object: \n" + customer);
