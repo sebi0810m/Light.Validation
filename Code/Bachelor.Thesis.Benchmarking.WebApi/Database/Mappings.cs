@@ -3,6 +3,7 @@ using Bachelor.Thesis.Benchmarking.CollectionFlat;
 using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.Dto;
 using Bachelor.Thesis.Benchmarking.ParametersPrimitiveAll;
 using Bachelor.Thesis.Benchmarking.ParametersPrimitiveTwo;
+using Bachelor.Thesis.Benchmarking.WebApi.ParametersComplexTwo;
 using LinqToDB.Mapping;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Database;
@@ -34,7 +35,7 @@ public static class Mappings
                       .Property(employee => employee.DateEmployed).IsNullable(false);
 
         // ParametersComplexTwo
-        mappingBuilder.Entity<CustomerDto>()
+        mappingBuilder.Entity<NewCustomerDto>()
                       .HasTableName("ParametersComplexTwo")
                       .Property(customer => customer.CustomerId).IsIdentity().IsPrimaryKey()
                       .Property(customer => customer.Address).IsNullable(false)
