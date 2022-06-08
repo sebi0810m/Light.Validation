@@ -13,14 +13,25 @@ public class LinqToDbAddCustomerSession : AsyncSession, IAddCustomerSession
 
     public Task<object> InsertEmployeeAsync(CustomerDto customer)
     {
-        var newCustomer = new NewCustomerDto()
+        var serializedCustomer = new NewCustomerDto
         {
-            CustomerId = customer.CustomerId
+            CustomerId = customer.CustomerId,
+            User = JsonConverter.Serialize(customer.User),
+            Address = JsonConverter.Serialize(customer.Address)
         };
 
-        newCustomer.User = JsonConverter.Serialize(customer.User);
-        newCustomer.Address = JsonConverter.Serialize(customer.Address);
+        // TestCode for deserializer -> does it work?
+        var deserializedCustomer = new CustomerDto
+        {
+            CustomerId = serializedCustomer.CustomerId,
+            User = (User) (JsonConverter.Deserialize(serializedCustomer.User, typeof(User)) ?? new User()),
+            Address = (Address) (JsonConverter.Deserialize(serializedCustomer.Address, typeof(Address)) ?? new Address())
+        };
 
-        return DataConnection.InsertWithIdentityAsync(customer);
+        Console.WriteLine("\n\nOriginal Customer object: \n" + customer);
+        Console.WriteLine("\n\nNewCustomer object: \n" + serializedCustomer);
+        Console.WriteLine("\n\nDeserialized customer object: \n" + deserializedCustomer);
+
+        return DataConnection.InsertWithIdentityAsync(serializedCustomer);
     }
 }
