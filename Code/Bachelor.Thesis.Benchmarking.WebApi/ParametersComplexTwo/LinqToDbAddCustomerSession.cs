@@ -9,28 +9,29 @@ namespace Bachelor.Thesis.Benchmarking.WebApi.ParametersComplexTwo;
 
 public class LinqToDbAddCustomerSession : AsyncSession, IAddCustomerSession
 {
-    public LinqToDbAddCustomerSession(DataConnection dataConnection, IsolationLevel transactionLevel = IsolationLevel.Serializable) : base(dataConnection, transactionLevel) { }
+    public LinqToDbAddCustomerSession(DataConnection dataConnection) : base(dataConnection) { }
 
     public Task<object> InsertEmployeeAsync(CustomerDto customer)
     {
         var serializedCustomer = new NewCustomerDto
         {
             CustomerId = customer.CustomerId,
-            User = JsonConverter.Serialize(customer.User),
-            Address = JsonConverter.Serialize(customer.Address)
+            User = Newtonsoft.Json.JsonConvert.SerializeObject(customer.User),
+            Address = Newtonsoft.Json.JsonConvert.SerializeObject(customer.Address)
         };
 
         // TestCode for deserializer -> does it work?
         var deserializedCustomer = new CustomerDto
         {
             CustomerId = serializedCustomer.CustomerId,
-            User = (User) (JsonConverter.Deserialize(serializedCustomer.User, typeof(User)) ?? new User()),
-            Address = (Address) (JsonConverter.Deserialize(serializedCustomer.Address, typeof(Address)) ?? new Address())
+            User = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(serializedCustomer.User),
+            Address = Newtonsoft.Json.JsonConvert.DeserializeObject<Address>(serializedCustomer.Address)
         };
 
         Console.WriteLine("\n\nOriginal Customer object: \n" + customer);
         Console.WriteLine("\n\nNewCustomer object: \n" + serializedCustomer);
         Console.WriteLine("\n\nDeserialized customer object: \n" + deserializedCustomer);
+        // end of TestCode
 
         return DataConnection.InsertWithIdentityAsync(serializedCustomer);
     }
