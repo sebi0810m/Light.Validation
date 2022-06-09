@@ -16,7 +16,7 @@ public class User
 
     public static User InvalidUser = new ()
     {
-        UserName = "JohnDoe",
+        UserName = "John",
         Password = "P4S$W0r",
         Name = "J",
         Email = "D",
@@ -24,8 +24,7 @@ public class User
     };
 
     [Required]
-    [MinLength(8)]
-    [MaxLength(30)]
+    [StringLength(30, MinimumLength = 8)]
     public string UserName { get; set; } = string.Empty;
 
     // password must contain minimum of eight characters with at least one letter and one number

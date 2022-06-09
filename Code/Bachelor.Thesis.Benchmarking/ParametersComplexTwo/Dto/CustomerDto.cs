@@ -32,6 +32,8 @@ public class CustomerDto : IValidatableObject
         var resultsAddress = new List<ValidationResult>();
         var results = new List<ValidationResult>();
 
+        // TODO: ModelValidation only validates with [Required] attribute, ignores other attributes
+
         Validator.TryValidateObject(User, new ValidationContext(User), resultsUser);
         results.AddRange(resultsUser);
 
