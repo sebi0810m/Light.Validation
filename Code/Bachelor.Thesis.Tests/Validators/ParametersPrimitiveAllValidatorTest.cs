@@ -4,11 +4,19 @@ using Bachelor.Thesis.Benchmarking.ParametersPrimitiveAll;
 using Bachelor.Thesis.Benchmarking.ParametersPrimitiveAll.Validators;
 using Light.GuardClauses;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Bachelor.Thesis.Tests.Validators;
 
 public class ParametersPrimitiveAllValidatorTest
 {
+    public ITestOutputHelper Output { get; }
+    
+    public ParametersPrimitiveAllValidatorTest(ITestOutputHelper output)
+    {
+        Output = output;
+    }
+    
     private readonly EmployeeDto _validEmployee = EmployeeDto.ValidEmployeeDto;
     private readonly EmployeeDto _invalidEmployee = EmployeeDto.InvalidEmployeeDto;
 
@@ -62,6 +70,8 @@ public class ParametersPrimitiveAllValidatorTest
     {
         var errors = new List<ValidationResult>();
         var result = Validator.TryValidateObject(_invalidEmployee, new ValidationContext(_invalidEmployee), errors, true);
+
+        Output.WriteLine(Json.Serialize(errors));
 
         result.MustBe(false);
     }
