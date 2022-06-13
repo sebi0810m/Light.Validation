@@ -35,7 +35,7 @@ public static class Mappings
                       .Property(employee => employee.DateEmployed).IsNullable(false);
 
         // ParametersComplexTwo
-        mappingBuilder.Entity<NewCustomerDto>()
+        mappingBuilder.Entity<SerializedCustomerDto>()
                       .HasTableName("ParametersComplexTwo")
                       .Property(customer => customer.CustomerId).IsIdentity().IsPrimaryKey()
                       .Property(customer => customer.Address).IsNullable(false)

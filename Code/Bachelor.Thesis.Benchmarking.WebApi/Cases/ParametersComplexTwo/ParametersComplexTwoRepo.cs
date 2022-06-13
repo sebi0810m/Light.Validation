@@ -79,7 +79,7 @@ public class ParametersComplexTwoRepo : IRepository<CustomerDto, Guid, IAddCusto
         return value;
     }
 
-    private static CustomerDto DeserializeCustomerDto(NewCustomerDto value)
+    private static CustomerDto DeserializeCustomerDto(SerializedCustomerDto value)
     {
         return new CustomerDto()
         {

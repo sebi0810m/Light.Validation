@@ -4,5 +4,5 @@ namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersComplexTwo;
 
 public interface IGetCustomerSession : IAsyncReadOnlySession
 {
-    Task<NewCustomerDto?> GetCustomerByIdAsync(Guid customerId);
+    Task<SerializedCustomerDto?> GetCustomerByIdAsync(Guid customerId);
 }

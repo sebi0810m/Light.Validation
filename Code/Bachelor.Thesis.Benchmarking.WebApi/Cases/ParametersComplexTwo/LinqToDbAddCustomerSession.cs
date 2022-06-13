@@ -12,7 +12,7 @@ public class LinqToDbAddCustomerSession : AsyncSession, IAddCustomerSession
 
     public Task<object> InsertCustomerAsync(CustomerDto customer)
     {
-        var serializedCustomer = new NewCustomerDto
+        var serializedCustomer = new SerializedCustomerDto
         {
             CustomerId = customer.CustomerId,
             User = JsonConvert.SerializeObject(customer.User),

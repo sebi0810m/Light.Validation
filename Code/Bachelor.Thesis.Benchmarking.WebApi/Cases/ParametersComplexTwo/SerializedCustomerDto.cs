@@ -1,6 +1,6 @@
 ﻿namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersComplexTwo;
 
-public class NewCustomerDto
+public class SerializedCustomerDto
 {
     public Guid CustomerId { get; set; }
 
