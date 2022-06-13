@@ -79,13 +79,11 @@ public class ParametersComplexTwoRepo : IRepository<CustomerDto, Guid, IAddCusto
         return value;
     }
 
-    private static CustomerDto DeserializeCustomerDto(SerializedCustomerDto value)
-    {
-        return new CustomerDto()
+    private static CustomerDto DeserializeCustomerDto(SerializedCustomerDto value) =>
+        new ()
         {
             CustomerId = value.CustomerId,
             User = JsonConvert.DeserializeObject<User>(value.User),
             Address = JsonConvert.DeserializeObject<Address>(value.Address)
         };
-    }
 }
