@@ -3,6 +3,7 @@ using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.FluentValidator;
 using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.LightValidator;
 using Bachelor.Thesis.Benchmarking.WebApi.Repository;
 using Bachelor.Thesis.Benchmarking.WebApi.Validation;
+using Newtonsoft.Json;
 using Synnotech.AspNetCore.MinimalApis.Responses;
 using Synnotech.DatabaseAbstractions;
 
@@ -54,20 +55,37 @@ public class ParametersComplexTwoRepo : IRepository<CustomerDto, Guid, IAddCusto
         return Response.Created($"{Url}{value.CustomerId}", value);
     }
 
-    public Task<IResult> GetObjectByIdAsync(
+    public async Task<IResult> GetObjectByIdAsync(
         Guid id,
         ISessionFactory<IGetCustomerSession> sessionFactory)
     {
-        throw new NotImplementedException();
+        await using var session = await sessionFactory.OpenSessionAsync();
+
+        var value = await session.GetCustomerByIdAsync(id);
+
+        if (value == null)
+            return Response.NotFound();
+
+        return Response.Ok(DeserializeCustomerDto(value));
     }
 
-    private async Task<CustomerDto> InsertEmployeeIntoDatabase(CustomerDto value, ISessionFactory<IAddCustomerSession> sessionFactory)
+    private static async Task<CustomerDto> InsertEmployeeIntoDatabase(CustomerDto value, ISessionFactory<IAddCustomerSession> sessionFactory)
     {
         await using var session = await sessionFactory.OpenSessionAsync();
 
-        value.CustomerId = (Guid) await session.InsertEmployeeAsync(value);
+        value.CustomerId = (Guid) await session.InsertCustomerAsync(value);
         await session.SaveChangesAsync();
 
         return value;
+    }
+
+    private static CustomerDto DeserializeCustomerDto(NewCustomerDto value)
+    {
+        return new CustomerDto()
+        {
+            CustomerId = value.CustomerId,
+            User = JsonConvert.DeserializeObject<User>(value.User),
+            Address = JsonConvert.DeserializeObject<Address>(value.Address)
+        };
     }
 }
