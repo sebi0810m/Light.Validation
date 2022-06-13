@@ -1,4 +1,5 @@
-﻿using Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersComplexTwo;
+﻿using Bachelor.Thesis.Benchmarking.WebApi.Cases.CollectionFlat;
+using Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersComplexTwo;
 using Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersPrimitiveAll;
 using Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersPrimitiveTwo;
 
@@ -10,6 +11,7 @@ public static class MappingSetup
     {
         return app.MapUserDtoEndpoints()
                   .AddEmployeeDtoEndpoints()
-                  .AddCustomerDtoEndpoints();
+                  .AddCustomerDtoEndpoints()
+                  .AddCollectionFlatEndpoints();
     }
 }
