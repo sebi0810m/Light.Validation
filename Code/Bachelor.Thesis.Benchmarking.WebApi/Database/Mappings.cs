@@ -3,7 +3,7 @@ using Bachelor.Thesis.Benchmarking.CollectionFlat;
 using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.Dto;
 using Bachelor.Thesis.Benchmarking.ParametersPrimitiveAll;
 using Bachelor.Thesis.Benchmarking.ParametersPrimitiveTwo;
-using Bachelor.Thesis.Benchmarking.WebApi.ParametersComplexTwo;
+using Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersComplexTwo;
 using LinqToDB.Mapping;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Database;

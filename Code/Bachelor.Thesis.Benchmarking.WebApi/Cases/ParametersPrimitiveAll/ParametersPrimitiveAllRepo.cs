@@ -5,7 +5,7 @@ using Bachelor.Thesis.Benchmarking.WebApi.Validation;
 using Synnotech.AspNetCore.MinimalApis.Responses;
 using Synnotech.DatabaseAbstractions;
 
-namespace Bachelor.Thesis.Benchmarking.WebApi.ParametersPrimitiveAll;
+namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersPrimitiveAll;
 
 public class ParametersPrimitiveAllRepo : IRepository<EmployeeDto, Guid, IAddEmployeeSession, IGetEmployeeSession>
 {

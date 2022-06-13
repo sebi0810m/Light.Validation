@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using Synnotech.AspNetCore.MinimalApis.Responses;
 using Synnotech.DatabaseAbstractions;
 
-namespace Bachelor.Thesis.Benchmarking.WebApi.ParametersComplexTwo;
+namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersComplexTwo;
 
 public class ParametersComplexTwoRepo : IRepository<CustomerDto, Guid, IAddCustomerSession, IGetCustomerSession>
 {

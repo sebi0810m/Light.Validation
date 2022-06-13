@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Synnotech.DatabaseAbstractions;
 using Synnotech.Linq2Db;
 
-namespace Bachelor.Thesis.Benchmarking.WebApi.ParametersPrimitiveAll;
+namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersPrimitiveAll;
 
 public static class EmployeeDtoController
 {

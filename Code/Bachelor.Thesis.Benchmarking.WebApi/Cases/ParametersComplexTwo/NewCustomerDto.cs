@@ -1,4 +1,4 @@
-﻿namespace Bachelor.Thesis.Benchmarking.WebApi.ParametersComplexTwo;
+﻿namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersComplexTwo;
 
 public class NewCustomerDto
 {

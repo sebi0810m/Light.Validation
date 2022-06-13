@@ -3,7 +3,7 @@ using LinqToDB;
 using LinqToDB.Data;
 using Synnotech.Linq2Db;
 
-namespace Bachelor.Thesis.Benchmarking.WebApi.ParametersPrimitiveAll;
+namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersPrimitiveAll;
 
 public class LinqToDbGetEmployeeSession : AsyncReadOnlySession, IGetEmployeeSession
 {

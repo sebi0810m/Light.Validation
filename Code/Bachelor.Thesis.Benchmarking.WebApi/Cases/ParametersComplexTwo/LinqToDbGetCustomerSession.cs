@@ -1,9 +1,8 @@
-﻿using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.Dto;
-using LinqToDB;
+﻿using LinqToDB;
 using LinqToDB.Data;
 using Synnotech.Linq2Db;
 
-namespace Bachelor.Thesis.Benchmarking.WebApi.ParametersComplexTwo;
+namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersComplexTwo;
 
 public class LinqToDbGetCustomerSession : AsyncReadOnlySession, IGetCustomerSession
 {

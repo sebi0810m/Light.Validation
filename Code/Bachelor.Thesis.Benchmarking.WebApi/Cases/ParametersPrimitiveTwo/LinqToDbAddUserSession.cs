@@ -3,7 +3,7 @@ using LinqToDB;
 using LinqToDB.Data;
 using Synnotech.Linq2Db;
 
-namespace Bachelor.Thesis.Benchmarking.WebApi.ParametersPrimitiveTwo;
+namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersPrimitiveTwo;
 
 public class LinqToDbAddUserSession : AsyncSession, IAddUserSession
 {
