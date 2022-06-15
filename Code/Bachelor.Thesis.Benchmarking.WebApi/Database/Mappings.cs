@@ -1,6 +1,6 @@
-﻿using Bachelor.Thesis.Benchmarking.CollectionComplex.Dto;
-using Bachelor.Thesis.Benchmarking.ParametersPrimitiveAll;
+﻿using Bachelor.Thesis.Benchmarking.ParametersPrimitiveAll;
 using Bachelor.Thesis.Benchmarking.ParametersPrimitiveTwo;
+using Bachelor.Thesis.Benchmarking.WebApi.Cases.CollectionComplex;
 using Bachelor.Thesis.Benchmarking.WebApi.Cases.CollectionFlat;
 using Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersComplexTwo;
 using LinqToDB.Mapping;
@@ -48,7 +48,7 @@ public static class Mappings
                       .Property(collection => collection.Availability).IsNullable(false);
 
         // CollectionComplex
-        mappingBuilder.Entity<CollectionComplexDto>()
+        mappingBuilder.Entity<SerializedCollectionComplex>()
                       .HasTableName("CollectionComplex")
                       .Property(collection => collection.Id).IsIdentity().IsPrimaryKey()
                       .Property(collection => collection.OrderDetailsList).IsNullable(false)
