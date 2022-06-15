@@ -29,7 +29,7 @@ public static class EmployeeDtoController
                         [FromServices] ISessionFactory<IAddEmployeeSession> sessionFactory,
                         [FromBody] EmployeeDto employee) => await repo.CreateWithModelValidationAsync(employee, sessionFactory));
 
-        app.MapGet(defaultUrl + "{id}", async (
+        app.MapGet(defaultUrl + "{id:guid}", async (
                        [FromServices] ParametersPrimitiveAllRepo repo,
                        [FromServices] ISessionFactory<IGetEmployeeSession> sessionFactory,
                        Guid id) => await repo.GetObjectByIdAsync(id, sessionFactory));

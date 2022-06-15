@@ -29,7 +29,7 @@ public static class CollectionFlatController
                         [FromServices] ISessionFactory<IAddCollectionFlatSession> sessionFactory,
                         [FromBody] CollectionFlatDto collectionFlat) => await repo.CreateWithModelValidationAsync(collectionFlat, sessionFactory));
 
-        app.MapGet(defaultUrl + "{id}", async (
+        app.MapGet(defaultUrl + "{id:guid}", async (
                        [FromServices] CollectionFlatRepo repo,
                        [FromServices] ISessionFactory<IGetCollectionFlatSession> sessionFactory,
                        Guid id) => await repo.GetObjectByIdAsync(id, sessionFactory));

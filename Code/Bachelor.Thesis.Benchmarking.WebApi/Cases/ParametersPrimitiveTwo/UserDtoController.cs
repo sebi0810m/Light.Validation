@@ -29,7 +29,7 @@ public static class UserDtoController
                         [FromServices] ISessionFactory<IAddUserSession> sessionFactory,
                         [FromBody] UserDto user) => await repo.CreateWithModelValidationAsync(user, sessionFactory));
 
-        app.MapGet(defaultUrl + "{id}", async (
+        app.MapGet(defaultUrl + "{id:int}", async (
                        [FromServices] ParametersPrimitiveTwoRepo repo,
                        [FromServices] ISessionFactory<IGetUserSession> sessionFactory,
                        int id) => await repo.GetObjectByIdAsync(id, sessionFactory));

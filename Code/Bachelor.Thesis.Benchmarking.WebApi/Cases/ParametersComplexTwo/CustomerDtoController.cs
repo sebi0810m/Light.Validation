@@ -29,7 +29,7 @@ public static class CustomerDtoController
                         [FromServices] ISessionFactory<IAddCustomerSession> sessionFactory,
                         [FromBody] CustomerDto customer) => await repo.CreateWithModelValidationAsync(customer, sessionFactory));
 
-        app.MapGet(defaultUrl + "{id}", async (
+        app.MapGet(defaultUrl + "{id:guid}", async (
                        [FromServices] ParametersComplexTwoRepo repo,
                        [FromServices] ISessionFactory<IGetCustomerSession> sessionFactory,
                        Guid id) => await repo.GetObjectByIdAsync(id, sessionFactory));
