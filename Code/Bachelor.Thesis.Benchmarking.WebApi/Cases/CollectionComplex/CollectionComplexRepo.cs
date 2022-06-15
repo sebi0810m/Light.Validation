@@ -39,7 +39,7 @@ public class CollectionComplexRepo : IRepository<CollectionComplexDto, Guid, IAd
 
     public async Task<IResult> CreateWithModelValidationAsync(CollectionComplexDto value, ISessionFactory<IAddCollectionComplexSession> sessionFactory)
     {
-        var errors = new ModelValidator<CollectionComplexDto>(value).PerformValidation());
+        var errors = new ModelValidator<CollectionComplexDto>(value).PerformValidation();
 
         if (errors.Count != 0)
             return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseModelValidationResults(errors));
@@ -78,6 +78,6 @@ public class CollectionComplexRepo : IRepository<CollectionComplexDto, Guid, IAd
         {
             Id = value.Id,
             OrderDetailsList = JsonConvert.DeserializeObject<List<OrderDetails>>(value.OrderDetailsList),
-            ArticleList = JsonConvert.DeserializeObject<List<Article>>(value.ArticleList);
+            ArticleList = JsonConvert.DeserializeObject<List<Article>>(value.ArticleList)
         };
 }
