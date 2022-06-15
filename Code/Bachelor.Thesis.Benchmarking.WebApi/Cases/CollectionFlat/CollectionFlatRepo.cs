@@ -54,11 +54,18 @@ public class CollectionFlatRepo : IRepository<CollectionFlatDto, Guid, IAddColle
         return Response.Created($"{Url}{value.Id}", value);
     }
 
-    public Task<IResult> GetObjectByIdAsync(
+    public async Task<IResult> GetObjectByIdAsync(
         Guid id,
         ISessionFactory<IGetCollectionFlatSession> sessionFactory)
     {
-        throw new NotImplementedException();
+        await using var session = await sessionFactory.OpenSessionAsync();
+
+        var value = await session.GetCollectionFlatAsync(id);
+
+        if (value == null)
+            return Response.NotFound();
+
+        return Response.Ok(DeserializeCollectionFlatDto(value));
     }
 
     private static async Task<CollectionFlatDto> InsertCollectionFlatIntoDatabase(
