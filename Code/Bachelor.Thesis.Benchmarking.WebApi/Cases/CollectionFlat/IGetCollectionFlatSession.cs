@@ -5,5 +5,5 @@ namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.CollectionFlat;
 
 public interface IGetCollectionFlatSession : IAsyncReadOnlySession
 {
-    Task<SerializedCollectionFlat?> GetCollectionFlatAsync(Guid id);
+    Task<SerializedCollectionFlat?> GetCollectionFlatByIdAsync(Guid id);
 }

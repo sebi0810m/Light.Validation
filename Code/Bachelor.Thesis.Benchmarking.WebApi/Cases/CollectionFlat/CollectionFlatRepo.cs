@@ -60,7 +60,7 @@ public class CollectionFlatRepo : IRepository<CollectionFlatDto, Guid, IAddColle
     {
         await using var session = await sessionFactory.OpenSessionAsync();
 
-        var value = await session.GetCollectionFlatAsync(id);
+        var value = await session.GetCollectionFlatByIdAsync(id);
 
         if (value == null)
             return Response.NotFound();
