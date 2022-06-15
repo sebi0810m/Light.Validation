@@ -19,15 +19,15 @@ public static class CollectionFlatController
         app.MapPost($"{defaultUrl}light", async (
                         [FromServices] CollectionFlatRepo repo,
                         [FromServices] ISessionFactory<IAddCollectionFlatSession> sessionFactory,
-                        [FromBody] CollectionFlatDto customer) => await repo.CreateWithLightValidationAsync(customer, sessionFactory));
+                        [FromBody] CollectionFlatDto collectionFlat) => await repo.CreateWithLightValidationAsync(collectionFlat, sessionFactory));
         app.MapPost($"{defaultUrl}fluent", async (
                         [FromServices] CollectionFlatRepo repo,
                         [FromServices] ISessionFactory<IAddCollectionFlatSession> sessionFactory,
-                        [FromBody] CollectionFlatDto customer) => await repo.CreateWithFluentValidationAsync(customer, sessionFactory));
+                        [FromBody] CollectionFlatDto collectionFlat) => await repo.CreateWithFluentValidationAsync(collectionFlat, sessionFactory));
         app.MapPost($"{defaultUrl}model", async (
                         [FromServices] CollectionFlatRepo repo,
                         [FromServices] ISessionFactory<IAddCollectionFlatSession> sessionFactory,
-                        [FromBody] CollectionFlatDto customer) => await repo.CreateWithModelValidationAsync(customer, sessionFactory));
+                        [FromBody] CollectionFlatDto collectionFlat) => await repo.CreateWithModelValidationAsync(collectionFlat, sessionFactory));
 
         app.MapGet(defaultUrl + "{id}", async (
                        [FromServices] CollectionFlatRepo repo,
