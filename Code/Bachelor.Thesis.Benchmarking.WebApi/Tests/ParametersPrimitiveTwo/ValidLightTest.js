@@ -8,7 +8,8 @@ export let options = {
 }
 
 export default function() {
-    const url = "https://localhost:7089/api/primitive/two/light";
+// ReSharper disable once UseOfImplicitGlobalInFunctionScope
+    const url = `https://localhost:7089/api/primitive/two/${__ENV.VALIDATION_NAME}`; // use with 'k6 run -e VALIDATION_NAME=xxxx ValidTest.js
 
     const payload = JSON.stringify({
         id: "42",
