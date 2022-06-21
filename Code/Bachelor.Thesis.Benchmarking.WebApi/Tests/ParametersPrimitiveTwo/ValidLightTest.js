@@ -5,10 +5,10 @@ export let options = {
     noConnectionReuse: false,
     vus: 1,
     duration: "10s"
-}
+};
 
 export default function() {
-// ReSharper disable once UseOfImplicitGlobalInFunctionScope
+    // ReSharper disable once UseOfImplicitGlobalInFunctionScope
     const url = `https://localhost:7089/api/primitive/two/${__ENV.VALIDATION_NAME}`; // use with 'k6 run -e VALIDATION_NAME=xxxx ValidTest.js
 
     const payload = JSON.stringify({
