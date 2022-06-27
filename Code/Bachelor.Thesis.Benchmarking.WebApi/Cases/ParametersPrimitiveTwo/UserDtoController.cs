@@ -17,9 +17,9 @@ public static class UserDtoController
         var defaultUrl = ParametersPrimitiveTwoRepo.Url;
 
         app.MapPost($"{defaultUrl}light", async (
-                        [FromServices] ParametersPrimitiveTwoRepo repo,
-                        [FromServices] ISessionFactory<IAddUserSession> sessionFactory,
-                        [FromBody] UserDto user) => await repo.CreateWithLightValidationAsync(user, sessionFactory));
+                        ParametersPrimitiveTwoRepo repo,
+                        ISessionFactory<IAddUserSession> sessionFactory,
+                        UserDto user) => await repo.CreateWithLightValidationAsync(user, sessionFactory));
         app.MapPost($"{defaultUrl}fluent", async (
                         [FromServices] ParametersPrimitiveTwoRepo repo,
                         [FromServices] ISessionFactory<IAddUserSession> sessionFactory,
