@@ -7,7 +7,6 @@ public class CollectionFlatDto
 {
     public static CollectionFlatDto ValidDto = new ()
     {
-        Id = Guid.NewGuid(),
         Names = new ()
         {
             "John Doe",
@@ -24,7 +23,6 @@ public class CollectionFlatDto
 
     public static CollectionFlatDto InvalidDto = new ()
     {
-        Id = Guid.NewGuid(),
         Names = new ()
         {
             "John Doe 0",
@@ -45,8 +43,9 @@ public class CollectionFlatDto
         }
     };
 
-    [Required]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
+
+    public Guid Guid { get; set; } = Guid.NewGuid();
 
     [Required]
     [MinLength(1), MaxLength(10)]

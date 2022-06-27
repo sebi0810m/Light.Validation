@@ -14,7 +14,7 @@ public class LinqToDbAddCollectionFlatSession : AsyncSession, IAddCollectionFlat
     {
         var serializedCollectionFlat = new SerializedCollectionFlat
         {
-            Id = collection.Id,
+            Id = collection.Guid,
             Names = JsonConvert.SerializeObject(collection.Names),
             Availability = JsonConvert.SerializeObject(collection.Availability)
         };

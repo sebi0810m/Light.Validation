@@ -23,7 +23,7 @@ public class CollectionFlatRepo : IRepository<CollectionFlatDto, Guid, IAddColle
 
         value = await InsertCollectionFlatIntoDatabase(value, sessionFactory);
 
-        return Response.Created($"{Url}{value.Id}", value);
+        return Response.Created($"{Url}{value.Guid}", value);
     }
 
     public async Task<IResult> CreateWithFluentValidationAsync(
@@ -37,7 +37,7 @@ public class CollectionFlatRepo : IRepository<CollectionFlatDto, Guid, IAddColle
 
         value = await InsertCollectionFlatIntoDatabase(value, sessionFactory);
 
-        return Response.Created($"{Url}{value.Id}", value);
+        return Response.Created($"{Url}{value.Guid}", value);
     }
 
     public async Task<IResult> CreateWithModelValidationAsync(
@@ -51,7 +51,7 @@ public class CollectionFlatRepo : IRepository<CollectionFlatDto, Guid, IAddColle
 
         value = await InsertCollectionFlatIntoDatabase(value, sessionFactory);
 
-        return Response.Created($"{Url}{value.Id}", value);
+        return Response.Created($"{Url}{value.Guid}", value);
     }
 
     public async Task<IResult> GetObjectByIdAsync(
@@ -74,7 +74,7 @@ public class CollectionFlatRepo : IRepository<CollectionFlatDto, Guid, IAddColle
     {
         await using var session = await sessionFactory.OpenSessionAsync();
 
-        value.Id = (Guid) await session.InsertCollectionFlatAsync(value);
+        value.Guid = (Guid) await session.InsertCollectionFlatAsync(value);
         await session.SaveChangesAsync();
 
         return value;
@@ -83,7 +83,7 @@ public class CollectionFlatRepo : IRepository<CollectionFlatDto, Guid, IAddColle
     private static CollectionFlatDto DeserializeCollectionFlatDto(SerializedCollectionFlat value) =>
         new ()
         {
-            Id = value.Id,
+            Guid = value.Id,
             Names = JsonConvert.DeserializeObject<List<string>>(value.Names),
             Availability = JsonConvert.DeserializeObject<Dictionary<long, bool>>(value.Availability)
         };

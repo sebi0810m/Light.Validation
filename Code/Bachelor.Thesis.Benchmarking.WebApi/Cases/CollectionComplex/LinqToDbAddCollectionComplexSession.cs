@@ -15,7 +15,7 @@ public class LinqToDbAddCollectionComplexSession : AsyncSession, IAddCollectionC
     {
         var serializedCollectionComplex = new SerializedCollectionComplex
         {
-            Id = collection.Id,
+            Id = collection.Guid,
             OrderDetailsList = JsonConvert.SerializeObject(collection.OrderDetailsList),
             ArticleList = JsonConvert.SerializeObject(collection.ArticleList)
         };

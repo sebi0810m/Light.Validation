@@ -6,19 +6,19 @@ public class CustomerDto : IValidatableObject
 {
     public static CustomerDto ValidCustomerDto = new()
     {
-        CustomerId = Guid.NewGuid(),
         User = User.ValidUser, 
         Address = Address.ValidAddress
     };
 
     public static CustomerDto InvalidCustomerDto = new()
     {
-        CustomerId = Guid.NewGuid(),
         User = User.InvalidUser, 
         Address = Address.InvalidAddress
     };
 
-    public Guid CustomerId { get; set; } 
+    public int Id { get; set; }
+    
+    public Guid Guid { get; set; } = Guid.NewGuid();
 
     [Required]
     public User User { get; set; } = new ();
@@ -34,10 +34,10 @@ public class CustomerDto : IValidatableObject
 
         // TODO: ModelValidation only validates with [Required] attribute, ignores other attributes
 
-        Validator.TryValidateObject(User, new ValidationContext(User), resultsUser);
+        Validator.TryValidateObject(User, new ValidationContext(User), resultsUser, true);
         results.AddRange(resultsUser);
 
-        Validator.TryValidateObject(Address, new ValidationContext(Address), resultsAddress);
+        Validator.TryValidateObject(Address, new ValidationContext(Address), resultsAddress, true);
         results.AddRange(resultsAddress);
 
         return results;

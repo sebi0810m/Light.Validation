@@ -22,7 +22,7 @@ public class CollectionComplexRepo : IRepository<CollectionComplexDto, Guid, IAd
 
         value = await InsertCollectionComplexIntoDatabase(value, sessionFactory);
 
-        return Response.Created($"{Url}{value.Id}", value);
+        return Response.Created($"{Url}{value.Guid}", value);
     }
 
     public async Task<IResult> CreateWithFluentValidationAsync(CollectionComplexDto value, ISessionFactory<IAddCollectionComplexSession> sessionFactory)
@@ -34,7 +34,7 @@ public class CollectionComplexRepo : IRepository<CollectionComplexDto, Guid, IAd
 
         value = await InsertCollectionComplexIntoDatabase(value, sessionFactory);
 
-        return Response.Created($"{Url}{value.Id}", value);
+        return Response.Created($"{Url}{value.Guid}", value);
     }
 
     public async Task<IResult> CreateWithModelValidationAsync(CollectionComplexDto value, ISessionFactory<IAddCollectionComplexSession> sessionFactory)
@@ -46,7 +46,7 @@ public class CollectionComplexRepo : IRepository<CollectionComplexDto, Guid, IAd
 
         value = await InsertCollectionComplexIntoDatabase(value, sessionFactory);
 
-        return Response.Created($"{Url}{value.Id}", value);
+        return Response.Created($"{Url}{value.Guid}", value);
     }
 
     public async Task<IResult> GetObjectByIdAsync(Guid id, ISessionFactory<IGetCollectionComplexSession> sessionFactory)
@@ -67,7 +67,7 @@ public class CollectionComplexRepo : IRepository<CollectionComplexDto, Guid, IAd
     {
         await using var session = await sessionFactory.OpenSessionAsync();
 
-        value.Id = (Guid) await session.InsertCollectionComplexAsync(value);
+        value.Guid = (Guid) await session.InsertCollectionComplexAsync(value);
         await session.SaveChangesAsync();
 
         return value;
@@ -76,7 +76,7 @@ public class CollectionComplexRepo : IRepository<CollectionComplexDto, Guid, IAd
     private static CollectionComplexDto DeserializeCollectionComplexDto(SerializedCollectionComplex value) =>
         new ()
         {
-            Id = value.Id,
+            Guid = value.Id,
             OrderDetailsList = JsonConvert.DeserializeObject<List<OrderDetails>>(value.OrderDetailsList),
             ArticleList = JsonConvert.DeserializeObject<List<Article>>(value.ArticleList)
         };
