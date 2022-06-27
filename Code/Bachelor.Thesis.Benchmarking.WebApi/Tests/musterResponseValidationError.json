@@ -1,0 +1,14 @@
+{
+    "propertyName1": "error message",
+    "propertyName2": {
+        "subProperty1": "error message",
+        "subProperty2": {
+            "subsub": "error message"
+        }
+    },
+    "propertyName2.subProperty1": "error message",
+    "propertyList": {
+        "2": "error message",
+        "5": "error message"
+    }
+}
