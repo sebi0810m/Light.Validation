@@ -5,5 +5,5 @@ namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersComplexTwo;
 
 public interface IAddCustomerSession : IAsyncSession
 {
-    public Task<object> InsertCustomerAsync(CustomerDto customer);
+    public Task<int> InsertCustomerAsync(CustomerDto customer);
 }

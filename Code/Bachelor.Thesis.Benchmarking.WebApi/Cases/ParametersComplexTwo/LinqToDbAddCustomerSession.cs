@@ -1,7 +1,7 @@
-﻿using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.Dto;
+﻿using System.Text.Json;
+using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.Dto;
 using LinqToDB;
 using LinqToDB.Data;
-using Newtonsoft.Json;
 using Synnotech.Linq2Db;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersComplexTwo;
@@ -10,15 +10,15 @@ public class LinqToDbAddCustomerSession : AsyncSession, IAddCustomerSession
 {
     public LinqToDbAddCustomerSession(DataConnection dataConnection) : base(dataConnection) { }
 
-    public Task<object> InsertCustomerAsync(CustomerDto customer)
+    public Task<int> InsertCustomerAsync(CustomerDto customer)
     {
-        var serializedCustomer = new SerializedCustomerDto
+        var serializedCustomer = new CustomerEntity
         {
-            CustomerId = customer.CustomerId,
-            User = JsonConvert.SerializeObject(customer.User),
-            Address = JsonConvert.SerializeObject(customer.Address)
+            CustomerId = customer.Guid,
+            User = JsonSerializer.Serialize(customer.User),
+            Address = JsonSerializer.Serialize(customer.Address)
         };
         
-        return DataConnection.InsertWithIdentityAsync(serializedCustomer);
+        return DataConnection.InsertWithInt32IdentityAsync(serializedCustomer);
     }
 }
