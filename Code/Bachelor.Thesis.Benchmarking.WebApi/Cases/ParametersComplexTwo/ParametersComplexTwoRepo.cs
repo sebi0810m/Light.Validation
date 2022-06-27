@@ -24,7 +24,7 @@ public class ParametersComplexTwoRepo : IRepository<CustomerDto, Guid, IAddCusto
 
         value = await InsertEmployeeIntoDatabase(value, sessionFactory);
 
-        return Response.Created($"{Url}{value.CustomerId}", value);
+        return Response.Created($"{Url}{value.Guid}", value);
     }
 
     public async Task<IResult> CreateWithFluentValidationAsync(
@@ -38,7 +38,7 @@ public class ParametersComplexTwoRepo : IRepository<CustomerDto, Guid, IAddCusto
 
         value = await InsertEmployeeIntoDatabase(value, sessionFactory);
 
-        return Response.Created($"{Url}{value.CustomerId}", value);
+        return Response.Created($"{Url}{value.Guid}", value);
     }
 
     public async Task<IResult> CreateWithModelValidationAsync(
@@ -52,7 +52,7 @@ public class ParametersComplexTwoRepo : IRepository<CustomerDto, Guid, IAddCusto
 
         value = await InsertEmployeeIntoDatabase(value, sessionFactory);
 
-        return Response.Created($"{Url}{value.CustomerId}", value);
+        return Response.Created($"{Url}{value.Guid}", value);
     }
 
     public async Task<IResult> GetObjectByIdAsync(
@@ -73,16 +73,16 @@ public class ParametersComplexTwoRepo : IRepository<CustomerDto, Guid, IAddCusto
     {
         await using var session = await sessionFactory.OpenSessionAsync();
 
-        value.CustomerId = (Guid) await session.InsertCustomerAsync(value);
+        value.Guid = (Guid) await session.InsertCustomerAsync(value);
         await session.SaveChangesAsync();
 
         return value;
     }
 
-    private static CustomerDto DeserializeCustomerDto(SerializedCustomerDto value) =>
+    private static CustomerDto DeserializeCustomerDto(CustomerEntity value) =>
         new ()
         {
-            CustomerId = value.CustomerId,
+            Guid = value.CustomerId,
             User = JsonConvert.DeserializeObject<User>(value.User),
             Address = JsonConvert.DeserializeObject<Address>(value.Address)
         };
