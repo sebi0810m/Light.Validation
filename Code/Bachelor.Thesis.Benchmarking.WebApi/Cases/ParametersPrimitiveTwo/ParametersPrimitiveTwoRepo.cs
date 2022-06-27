@@ -2,6 +2,8 @@
 using Bachelor.Thesis.Benchmarking.ParametersPrimitiveTwo.Validators;
 using Bachelor.Thesis.Benchmarking.WebApi.Repository;
 using Bachelor.Thesis.Benchmarking.WebApi.Validation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Synnotech.AspNetCore.MinimalApis.Responses;
 using Synnotech.DatabaseAbstractions;
 
@@ -13,12 +15,11 @@ public class ParametersPrimitiveTwoRepo : IRepository<UserDto, int, IAddUserSess
 
     public async Task<IResult> CreateWithLightValidationAsync(
         UserDto value,
+        LightValidator validator,
         ISessionFactory<IAddUserSession> sessionFactory)
     {
-        var errors = new LightValidator<UserDto>(new LightValidator(), value).PerformValidation();
-
-        if (!errors.IsValid)
-            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseLightValidationResults(errors));
+        if (validator.CheckForErrors(value, out var errors))
+            return Response.BadRequest(errors);
 
         value = await InsertUserIntoDatabase(value, sessionFactory);
 
@@ -27,11 +28,17 @@ public class ParametersPrimitiveTwoRepo : IRepository<UserDto, int, IAddUserSess
 
     public async Task<IResult> CreateWithFluentValidationAsync(
         UserDto value,
+        FluentValidator validator,
         ISessionFactory<IAddUserSession> sessionFactory)
     {
-        var errors = new FluentValidator<UserDto>(new FluentValidator(), value).PerformValidation();
+        // ReSharper disable once MethodHasAsyncOverload -- we do not call third-party services during validation, thus no async
+        var errors = validator.Validate(value);
         if (!errors.IsValid)
-            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseFluentValidationResults(errors));
+        {
+            var modelStateDictionary = new ModelStateDictionary();
+            errors.AddToModelState(modelStateDictionary, string.Empty);
+            return Response.BadRequest(modelStateDictionary);
+        }
 
         value = await InsertUserIntoDatabase(value, sessionFactory);
 
@@ -42,10 +49,10 @@ public class ParametersPrimitiveTwoRepo : IRepository<UserDto, int, IAddUserSess
         UserDto value,
         ISessionFactory<IAddUserSession> sessionFactory)
     {
-        var errors = new ModelValidator<UserDto>(value).PerformValidation();
+        var errors = ModelValidator.PerformValidation(value);
 
         if (errors.Count != 0)
-            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseModelValidationResults(errors));
+            return Response.BadRequest(ParseValidationResultsToCorrectType.ParseModelValidationResults(errors));
 
         value = await InsertUserIntoDatabase(value, sessionFactory);
 

@@ -2,19 +2,12 @@
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Validation;
 
-public class ModelValidator<T>
+public static class ModelValidator
 {
-    private readonly T _itemToValidate;
-
-    public ModelValidator(T itemToValidate)
-    {
-        _itemToValidate = itemToValidate;
-    }
-
-    public List<ValidationResult> PerformValidation()
+    public static List<ValidationResult> PerformValidation<T>(T value)
     {
         var errors = new List<ValidationResult>();
-        Validator.TryValidateObject(_itemToValidate!, new ValidationContext(_itemToValidate!), errors, true);
+        Validator.TryValidateObject(value!, new ValidationContext(value!), errors, true);
         return errors;
     }
 }
