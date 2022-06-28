@@ -2,14 +2,12 @@
 using Bachelor.Thesis.Benchmarking.ParametersPrimitiveAll.Validators;
 using Bachelor.Thesis.Benchmarking.WebApi.Repository;
 using Bachelor.Thesis.Benchmarking.WebApi.Validation;
-using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Synnotech.AspNetCore.MinimalApis.Responses;
 using Synnotech.DatabaseAbstractions;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersPrimitiveAll;
 
-public class ParametersPrimitiveAllRepo 
+public class ParametersPrimitiveAllRepo
     : IRepository<EmployeeDto, int, LightValidator, FluentValidator, IAddEmployeeSession, IGetEmployeeSession>
 {
     public const string Url = "/api/primitive/all/";
@@ -19,7 +17,7 @@ public class ParametersPrimitiveAllRepo
         LightValidator validator,
         ISessionFactory<IAddEmployeeSession> sessionFactory)
     {
-        if(validator.CheckForErrors(value, out var errors))
+        if (validator.CheckForErrors(value, out var errors))
             return Response.BadRequest(errors);
 
         value = await InsertEmployeeIntoDatabase(value, sessionFactory);
@@ -35,11 +33,7 @@ public class ParametersPrimitiveAllRepo
         // ReSharper disable once MethodHasAsyncOverload
         var errors = validator.Validate(value);
         if (!errors.IsValid)
-        {
-            var modelStateDictionary = new ModelStateDictionary();
-            errors.AddToModelState(modelStateDictionary, string.Empty);
-            return Response.BadRequest(modelStateDictionary);
-        }
+            return Response.BadRequest(errors.ToModelStateDictionary());
 
         value = await InsertEmployeeIntoDatabase(value, sessionFactory);
 
@@ -47,11 +41,10 @@ public class ParametersPrimitiveAllRepo
     }
 
     public async Task<IResult> CreateWithModelValidationAsync(
-        EmployeeDto value, 
+        EmployeeDto value,
         ISessionFactory<IAddEmployeeSession> sessionFactory)
     {
         var errors = ModelValidatorHelper.PerformValidation(value);
-
         if (errors.Count != 0)
             return Response.BadRequest(errors.ToModelStateDictionary());
 
@@ -66,7 +59,7 @@ public class ParametersPrimitiveAllRepo
 
         var value = await session.GetEmployeeByIdAsync(id);
 
-        if(value == null) 
+        if (value == null)
             return Response.NotFound();
 
         return Response.Ok(value);

@@ -35,11 +35,7 @@ public class ParametersPrimitiveTwoRepo
         // ReSharper disable once MethodHasAsyncOverload -- we do not call third-party services during validation, thus no async
         var errors = validator.Validate(value);
         if (!errors.IsValid)
-        {
-            var modelStateDictionary = new ModelStateDictionary();
-            errors.AddToModelState(modelStateDictionary, string.Empty);
-            return Response.BadRequest(modelStateDictionary);
-        }
+            return Response.BadRequest(errors.ToModelStateDictionary());
 
         value = await InsertUserIntoDatabase(value, sessionFactory);
 

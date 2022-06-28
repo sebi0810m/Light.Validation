@@ -36,13 +36,8 @@ public class ParametersComplexTwoRepo
     {
         // ReSharper disable once MethodHasAsyncOverload
         var errors = validator.Validate(value);
-
         if (!errors.IsValid)
-        {
-            var modelStateDictionary = new ModelStateDictionary();
-            errors.AddToModelState(modelStateDictionary, string.Empty);
-            return Response.BadRequest(modelStateDictionary);
-        }
+            return Response.BadRequest(errors.ToModelStateDictionary());
 
         value = await InsertEmployeeIntoDatabase(value, sessionFactory);
 

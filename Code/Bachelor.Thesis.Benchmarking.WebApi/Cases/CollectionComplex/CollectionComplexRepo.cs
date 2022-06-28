@@ -36,13 +36,8 @@ public class CollectionComplexRepo
     {
         // ReSharper disable once MethodHasAsyncOverload
         var errors = validator.Validate(value);
-
         if (!errors.IsValid)
-        {
-            var modelStateDictionary = new ModelStateDictionary();
-            errors.AddToModelState(modelStateDictionary, string.Empty);
-            return Response.BadRequest(errors);
-        }
+            return Response.BadRequest(errors.ToModelStateDictionary());
 
         value = await InsertCollectionComplexIntoDatabase(value, sessionFactory);
 
