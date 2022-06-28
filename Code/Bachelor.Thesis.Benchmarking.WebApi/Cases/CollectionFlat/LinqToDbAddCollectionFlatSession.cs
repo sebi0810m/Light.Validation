@@ -10,15 +10,16 @@ public class LinqToDbAddCollectionFlatSession : AsyncSession, IAddCollectionFlat
 {
     public LinqToDbAddCollectionFlatSession(DataConnection dataConnection) : base(dataConnection) { }
 
-    public Task<object> InsertCollectionFlatAsync(CollectionFlatDto collection)
+    public Task<int> InsertCollectionFlatAsync(CollectionFlatDto collection)
     {
         var serializedCollectionFlat = new CollectionFlatEntity
         {
-            Id = collection.Guid,
+            Id = collection.Id,
+            Guid = collection.Guid,
             Names = JsonConvert.SerializeObject(collection.Names),
             Availability = JsonConvert.SerializeObject(collection.Availability)
         };
 
-        return DataConnection.InsertWithIdentityAsync(serializedCollectionFlat);
+        return DataConnection.InsertWithInt32IdentityAsync(serializedCollectionFlat);
     }
 }

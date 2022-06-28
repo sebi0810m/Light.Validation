@@ -5,5 +5,5 @@ namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.CollectionFlat;
 
 public interface IAddCollectionFlatSession : IAsyncSession
 {
-    public Task<object> InsertCollectionFlatAsync(CollectionFlatDto collection);
+    public Task<int> InsertCollectionFlatAsync(CollectionFlatDto collection);
 }
