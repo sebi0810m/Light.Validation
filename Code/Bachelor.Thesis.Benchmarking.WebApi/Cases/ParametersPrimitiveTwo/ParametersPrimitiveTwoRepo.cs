@@ -9,7 +9,7 @@ using Synnotech.DatabaseAbstractions;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersPrimitiveTwo;
 
-public class ParametersPrimitiveTwoRepo : IRepository<UserDto, int, IAddUserSession, IGetUserSession>
+public class ParametersPrimitiveTwoRepo : IRepository<UserDto, int, LightValidator, FluentValidator, IAddUserSession, IGetUserSession>
 {
     public const string Url = "/api/primitive/two/";
 
@@ -52,7 +52,7 @@ public class ParametersPrimitiveTwoRepo : IRepository<UserDto, int, IAddUserSess
         var errors = ModelValidator.PerformValidation(value);
 
         if (errors.Count != 0)
-            return Response.BadRequest(ParseValidationResultsToCorrectType.ParseModelValidationResults(errors));
+            return Response.BadRequest(errors);
 
         value = await InsertUserIntoDatabase(value, sessionFactory);
 
@@ -73,7 +73,7 @@ public class ParametersPrimitiveTwoRepo : IRepository<UserDto, int, IAddUserSess
         return Response.Ok(value);
     }
 
-    private async Task<UserDto> InsertUserIntoDatabase(UserDto value, ISessionFactory<IAddUserSession> sessionFactory)
+    private static async Task<UserDto> InsertUserIntoDatabase(UserDto value, ISessionFactory<IAddUserSession> sessionFactory)
     {
         await using var session = await sessionFactory.OpenSessionAsync();
         value.Id = await session.InsertUserAsync(value);
