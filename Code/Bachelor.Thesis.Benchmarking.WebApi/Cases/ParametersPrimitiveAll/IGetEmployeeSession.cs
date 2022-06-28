@@ -5,5 +5,5 @@ namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersPrimitiveAll;
 
 public interface IGetEmployeeSession : IAsyncReadOnlySession
 {
-    Task<EmployeeDto?> GetEmployeeByIdAsync(Guid employeeId);
+    Task<EmployeeDto?> GetEmployeeByIdAsync(int employeeId);
 }

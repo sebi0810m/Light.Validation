@@ -9,7 +9,7 @@ public class LinqToDbGetEmployeeSession : AsyncReadOnlySession, IGetEmployeeSess
 {
     public LinqToDbGetEmployeeSession(DataConnection dataConnection) : base(dataConnection) { }
 
-    public Task<EmployeeDto?> GetEmployeeByIdAsync(Guid employeeId) =>
+    public Task<EmployeeDto?> GetEmployeeByIdAsync(int employeeId) =>
         DataConnection.GetTable<EmployeeDto>()
                       .FirstOrDefaultAsync(employee => employee.Id == employeeId);
 }

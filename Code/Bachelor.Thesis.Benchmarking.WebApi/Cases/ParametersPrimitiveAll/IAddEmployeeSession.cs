@@ -5,5 +5,5 @@ namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersPrimitiveAll;
 
 public interface IAddEmployeeSession : IAsyncSession
 {
-    public Task<object> InsertEmployeeAsync(EmployeeDto employee);
+    public Task<int> InsertEmployeeAsync(EmployeeDto employee);
 }
