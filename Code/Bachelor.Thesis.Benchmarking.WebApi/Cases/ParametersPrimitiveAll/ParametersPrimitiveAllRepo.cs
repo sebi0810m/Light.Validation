@@ -2,23 +2,24 @@
 using Bachelor.Thesis.Benchmarking.ParametersPrimitiveAll.Validators;
 using Bachelor.Thesis.Benchmarking.WebApi.Repository;
 using Bachelor.Thesis.Benchmarking.WebApi.Validation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Synnotech.AspNetCore.MinimalApis.Responses;
 using Synnotech.DatabaseAbstractions;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersPrimitiveAll;
 
-public class ParametersPrimitiveAllRepo : IRepository<EmployeeDto, Guid, IAddEmployeeSession, IGetEmployeeSession>
+public class ParametersPrimitiveAllRepo : IRepository<EmployeeDto, int, LightValidator, FluentValidator, IAddEmployeeSession, IGetEmployeeSession>
 {
     public const string Url = "/api/primitive/all/";
 
     public async Task<IResult> CreateWithLightValidationAsync(
         EmployeeDto value,
+        LightValidator validator,
         ISessionFactory<IAddEmployeeSession> sessionFactory)
     {
-        var errors = new LightValidator<EmployeeDto>(new LightValidator(), value).PerformValidation();
-
-        if (!errors.IsValid)
-            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseLightValidationResults(errors));
+        if(validator.CheckForErrors(value, out var errors))
+            return Response.BadRequest(errors);
 
         value = await InsertEmployeeIntoDatabase(value, sessionFactory);
 
@@ -27,30 +28,38 @@ public class ParametersPrimitiveAllRepo : IRepository<EmployeeDto, Guid, IAddEmp
 
     public async Task<IResult> CreateWithFluentValidationAsync(
         EmployeeDto value,
+        FluentValidator validator,
         ISessionFactory<IAddEmployeeSession> sessionFactory)
     {
-        var errors = new FluentValidator<EmployeeDto>(new FluentValidator(), value).PerformValidation();
+        // ReSharper disable once MethodHasAsyncOverload
+        var errors = validator.Validate(value);
         if (!errors.IsValid)
-            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseFluentValidationResults(errors));
+        {
+            var modelStateDictionary = new ModelStateDictionary();
+            errors.AddToModelState(modelStateDictionary, string.Empty);
+            return Response.BadRequest(modelStateDictionary);
+        }
 
         value = await InsertEmployeeIntoDatabase(value, sessionFactory);
 
         return Response.Created($"{Url}{value.Id}", value);
     }
 
-    public async Task<IResult> CreateWithModelValidationAsync(EmployeeDto value, ISessionFactory<IAddEmployeeSession> sessionFactory)
+    public async Task<IResult> CreateWithModelValidationAsync(
+        EmployeeDto value, 
+        ISessionFactory<IAddEmployeeSession> sessionFactory)
     {
-        var errors = new ModelValidator<EmployeeDto>(value).PerformValidation();
+        var errors = ModelValidator.PerformValidation(value);
 
         if (errors.Count != 0)
-            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseModelValidationResults(errors));
+            return Response.BadRequest(errors);
 
         value = await InsertEmployeeIntoDatabase(value, sessionFactory);
 
         return Response.Created($"{Url}{value.Id}", value);
     }
 
-    public async Task<IResult> GetObjectByIdAsync(Guid id, ISessionFactory<IGetEmployeeSession> sessionFactory)
+    public async Task<IResult> GetObjectByIdAsync(int id, ISessionFactory<IGetEmployeeSession> sessionFactory)
     {
         await using var session = await sessionFactory.OpenSessionAsync();
 
@@ -66,7 +75,7 @@ public class ParametersPrimitiveAllRepo : IRepository<EmployeeDto, Guid, IAddEmp
     {
         await using var session = await sessionFactory.OpenSessionAsync();
 
-        value.Id = (Guid) await session.InsertEmployeeAsync(value);
+        value.Id = await session.InsertEmployeeAsync(value);
         await session.SaveChangesAsync();
 
         return value;
