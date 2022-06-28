@@ -10,7 +10,8 @@ using Synnotech.DatabaseAbstractions;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.CollectionFlat;
 
-public class CollectionFlatRepo : IRepository<CollectionFlatDto, int, LightDtoValidator, FluentDtoValidator, IAddCollectionFlatSession, IGetCollectionFlatSession>
+public class CollectionFlatRepo
+    : IRepository<CollectionFlatDto, int, LightDtoValidator, FluentDtoValidator, IAddCollectionFlatSession, IGetCollectionFlatSession>
 {
     public const string Url = "/api/collection/flat/";
 

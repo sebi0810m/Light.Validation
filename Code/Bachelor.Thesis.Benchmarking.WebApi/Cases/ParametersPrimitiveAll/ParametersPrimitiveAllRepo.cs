@@ -9,7 +9,8 @@ using Synnotech.DatabaseAbstractions;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersPrimitiveAll;
 
-public class ParametersPrimitiveAllRepo : IRepository<EmployeeDto, int, LightValidator, FluentValidator, IAddEmployeeSession, IGetEmployeeSession>
+public class ParametersPrimitiveAllRepo 
+    : IRepository<EmployeeDto, int, LightValidator, FluentValidator, IAddEmployeeSession, IGetEmployeeSession>
 {
     public const string Url = "/api/primitive/all/";
 

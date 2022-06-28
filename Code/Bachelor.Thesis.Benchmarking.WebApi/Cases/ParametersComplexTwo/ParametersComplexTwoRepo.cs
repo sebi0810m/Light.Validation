@@ -11,7 +11,8 @@ using Synnotech.DatabaseAbstractions;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersComplexTwo;
 
-public class ParametersComplexTwoRepo : IRepository<CustomerDto, int, LightDtoValidator, FluentDtoValidator, IAddCustomerSession, IGetCustomerSession>
+public class ParametersComplexTwoRepo 
+    : IRepository<CustomerDto, int, LightDtoValidator, FluentDtoValidator, IAddCustomerSession, IGetCustomerSession>
 {
     public const string Url = "/api/complex/two/";
 
