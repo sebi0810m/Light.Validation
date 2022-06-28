@@ -5,5 +5,5 @@ namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.CollectionComplex;
 
 public interface IAddCollectionComplexSession : IAsyncSession
 {
-    public Task<object> InsertCollectionComplexAsync(CollectionComplexDto collection);
+    public Task<int> InsertCollectionComplexAsync(CollectionComplexDto collection);
 }

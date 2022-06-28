@@ -1,5 +1,4 @@
-﻿using System.Data;
-using Bachelor.Thesis.Benchmarking.CollectionComplex.Dto;
+﻿using Bachelor.Thesis.Benchmarking.CollectionComplex.Dto;
 using LinqToDB;
 using LinqToDB.Data;
 using Newtonsoft.Json;
@@ -11,15 +10,16 @@ public class LinqToDbAddCollectionComplexSession : AsyncSession, IAddCollectionC
 {
     public LinqToDbAddCollectionComplexSession(DataConnection dataConnection) : base(dataConnection) { }
 
-    public Task<object> InsertCollectionComplexAsync(CollectionComplexDto collection)
+    public Task<int> InsertCollectionComplexAsync(CollectionComplexDto collection)
     {
         var serializedCollectionComplex = new CollectionComplexEntity
         {
-            Id = collection.Guid,
+            Id = collection.Id,
+            Guid = collection.Guid,
             OrderDetailsList = JsonConvert.SerializeObject(collection.OrderDetailsList),
             ArticleList = JsonConvert.SerializeObject(collection.ArticleList)
         };
 
-        return DataConnection.InsertWithIdentityAsync(serializedCollectionComplex);
+        return DataConnection.InsertWithInt32IdentityAsync(serializedCollectionComplex);
     }
 }

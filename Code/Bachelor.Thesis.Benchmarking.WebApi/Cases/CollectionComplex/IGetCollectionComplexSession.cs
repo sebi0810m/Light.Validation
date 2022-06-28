@@ -4,5 +4,5 @@ namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.CollectionComplex;
 
 public interface IGetCollectionComplexSession : IAsyncReadOnlySession
 {
-    Task<CollectionComplexEntity?> GetCollectionComplexByIdAsync(Guid id);
+    Task<CollectionComplexEntity?> GetCollectionComplexByIdAsync(int id);
 }

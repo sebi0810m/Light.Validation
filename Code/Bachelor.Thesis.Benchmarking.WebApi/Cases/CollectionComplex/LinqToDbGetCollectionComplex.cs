@@ -8,7 +8,7 @@ public class LinqToDbGetCollectionComplex : AsyncReadOnlySession, IGetCollection
 {
     public LinqToDbGetCollectionComplex(DataConnection dataConnection) : base(dataConnection) { }
 
-    public Task<CollectionComplexEntity?> GetCollectionComplexByIdAsync(Guid id) =>
+    public Task<CollectionComplexEntity?> GetCollectionComplexByIdAsync(int id) =>
         DataConnection.GetTable<CollectionComplexEntity>()
                       .FirstOrDefaultAsync(collection => collection.Id == id);
 }
