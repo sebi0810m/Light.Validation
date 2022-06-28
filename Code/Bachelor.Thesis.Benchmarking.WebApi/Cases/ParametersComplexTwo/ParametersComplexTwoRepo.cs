@@ -87,6 +87,7 @@ public class ParametersComplexTwoRepo
     private static CustomerDto DeserializeCustomerDto(CustomerEntity value) =>
         new ()
         {
+            Id = value.Id,
             Guid = value.CustomerId,
             User = JsonConvert.DeserializeObject<User>(value.User),
             Address = JsonConvert.DeserializeObject<Address>(value.Address)
