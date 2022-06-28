@@ -19,6 +19,7 @@
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 		<PackageReference Include="Light.GuardClauses" Version="10.0.0" />
+		<PackageReference Include="FluentValidation.AspNetCore" Version="11.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>

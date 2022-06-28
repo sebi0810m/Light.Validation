@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.Dto;
 using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.FluentValidator;
 using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.LightValidator;
+using FluentValidation.AspNetCore;
 using Light.GuardClauses;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -54,6 +57,11 @@ public class ParametersComplexTwoValidatorTest
         var fluentValidator = new FluentDtoValidator();
         var result = fluentValidator.Validate(_invalidCustomer);
 
+        var modelStateDictionary = new ModelStateDictionary();
+
+        result.AddToModelState(modelStateDictionary, string.Empty);
+        Output.WriteLine(Json.Serialize(modelStateDictionary));
+
         result.IsValid.MustBe(false);
     }
 
@@ -72,7 +80,14 @@ public class ParametersComplexTwoValidatorTest
         var errors = new List<ValidationResult>();
         var result = Validator.TryValidateObject(_invalidCustomer, new ValidationContext(_invalidCustomer), errors);
 
-        Output.WriteLine(Json.Serialize(errors));
+        var modelStateDictionary = new ModelStateDictionary();
+
+        foreach (var item in errors)
+        {
+            modelStateDictionary.AddModelError(item.MemberNames.FirstOrDefault()!, item.ErrorMessage!);
+        }
+
+        Output.WriteLine(Json.Serialize(modelStateDictionary));
 
         result.MustBe(false);
     }
