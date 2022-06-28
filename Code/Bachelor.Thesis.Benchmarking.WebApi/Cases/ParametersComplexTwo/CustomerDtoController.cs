@@ -23,7 +23,7 @@ public static class CustomerDtoController
         app.MapPost($"{defaultUrl}light", async (
                         ParametersComplexTwoRepo repo,
                         ISessionFactory<IAddCustomerSession> sessionFactory,
-                        FluentDtoValidator validator,
+                        LightDtoValidator validator,
                         CustomerDto customer) => await repo.CreateWithLightValidationAsync(customer, validator, sessionFactory));
         app.MapPost($"{defaultUrl}fluent", async (
                         ParametersComplexTwoRepo repo,
