@@ -1,5 +1,5 @@
 ﻿using Bachelor.Thesis.Benchmarking.CollectionFlat;
-using Microsoft.AspNetCore.Mvc;
+using Bachelor.Thesis.Benchmarking.CollectionFlat.Validators;
 using Synnotech.DatabaseAbstractions;
 using Synnotech.Linq2Db;
 
@@ -9,6 +9,8 @@ public static class CollectionFlatController
 {
     public static IServiceCollection AddCollectionFlatServices(this IServiceCollection services) =>
         services.AddSingleton<CollectionFlatRepo>()
+                .AddSingleton<LightDtoValidator>()
+                .AddSingleton<FluentDtoValidator>()
                 .AddSessionFactoryFor<IAddCollectionFlatSession, LinqToDbAddCollectionFlatSession>()
                 .AddSessionFactoryFor<IGetCollectionFlatSession, LinqToDbGetCollectionFlatSession>();
 
@@ -17,22 +19,24 @@ public static class CollectionFlatController
         var defaultUrl = CollectionFlatRepo.Url;
 
         app.MapPost($"{defaultUrl}light", async (
-                        [FromServices] CollectionFlatRepo repo,
-                        [FromServices] ISessionFactory<IAddCollectionFlatSession> sessionFactory,
-                        [FromBody] CollectionFlatDto collectionFlat) => await repo.CreateWithLightValidationAsync(collectionFlat, sessionFactory));
+                        CollectionFlatRepo repo,
+                        ISessionFactory<IAddCollectionFlatSession> sessionFactory,
+                        LightDtoValidator validator,
+                        CollectionFlatDto collectionFlat) => await repo.CreateWithLightValidationAsync(collectionFlat, validator, sessionFactory));
         app.MapPost($"{defaultUrl}fluent", async (
-                        [FromServices] CollectionFlatRepo repo,
-                        [FromServices] ISessionFactory<IAddCollectionFlatSession> sessionFactory,
-                        [FromBody] CollectionFlatDto collectionFlat) => await repo.CreateWithFluentValidationAsync(collectionFlat, sessionFactory));
+                        CollectionFlatRepo repo,
+                        ISessionFactory<IAddCollectionFlatSession> sessionFactory,
+                        FluentDtoValidator validator,
+                        CollectionFlatDto collectionFlat) => await repo.CreateWithFluentValidationAsync(collectionFlat, validator, sessionFactory));
         app.MapPost($"{defaultUrl}model", async (
-                        [FromServices] CollectionFlatRepo repo,
-                        [FromServices] ISessionFactory<IAddCollectionFlatSession> sessionFactory,
-                        [FromBody] CollectionFlatDto collectionFlat) => await repo.CreateWithModelValidationAsync(collectionFlat, sessionFactory));
+                        CollectionFlatRepo repo,
+                        ISessionFactory<IAddCollectionFlatSession> sessionFactory,
+                        CollectionFlatDto collectionFlat) => await repo.CreateWithModelValidationAsync(collectionFlat, sessionFactory));
 
-        app.MapGet(defaultUrl + "{id:guid}", async (
-                       [FromServices] CollectionFlatRepo repo,
-                       [FromServices] ISessionFactory<IGetCollectionFlatSession> sessionFactory,
-                       Guid id) => await repo.GetObjectByIdAsync(id, sessionFactory));
+        app.MapGet(defaultUrl + "{id:int}", async (
+                       CollectionFlatRepo repo,
+                       ISessionFactory<IGetCollectionFlatSession> sessionFactory,
+                       int id) => await repo.GetObjectByIdAsync(id, sessionFactory));
 
         return app;
     }
