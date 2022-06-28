@@ -3,59 +3,75 @@ using Bachelor.Thesis.Benchmarking.CollectionComplex.FluentValidation;
 using Bachelor.Thesis.Benchmarking.CollectionComplex.LightValidation;
 using Bachelor.Thesis.Benchmarking.WebApi.Repository;
 using Bachelor.Thesis.Benchmarking.WebApi.Validation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using Synnotech.AspNetCore.MinimalApis.Responses;
 using Synnotech.DatabaseAbstractions;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.CollectionComplex;
 
-public class CollectionComplexRepo : IRepository<CollectionComplexDto, Guid, IAddCollectionComplexSession, IGetCollectionComplexSession>
+public class CollectionComplexRepo
+    : IRepository<CollectionComplexDto, int, LightDtoValidator, FluentDtoValidator, IAddCollectionComplexSession, IGetCollectionComplexSession>
 {
     public const string Url = "/api/collection/complex/";
 
-    public async Task<IResult> CreateWithLightValidationAsync(CollectionComplexDto value, ISessionFactory<IAddCollectionComplexSession> sessionFactory)
+    public async Task<IResult> CreateWithLightValidationAsync(
+        CollectionComplexDto value,
+        LightDtoValidator validator,
+        ISessionFactory<IAddCollectionComplexSession> sessionFactory)
     {
-        var errors = new LightValidator<CollectionComplexDto>(new LightDtoValidator(), value).PerformValidation();
-
-        if (!errors.IsValid)
-            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseLightValidationResults(errors));
+        if (validator.CheckForErrors(value, out var errors))
+            return Response.BadRequest(errors);
 
         value = await InsertCollectionComplexIntoDatabase(value, sessionFactory);
 
-        return Response.Created($"{Url}{value.Guid}", value);
+        return Response.Created($"{Url}{value.Id}", value);
     }
 
-    public async Task<IResult> CreateWithFluentValidationAsync(CollectionComplexDto value, ISessionFactory<IAddCollectionComplexSession> sessionFactory)
+    public async Task<IResult> CreateWithFluentValidationAsync(
+        CollectionComplexDto value,
+        FluentDtoValidator validator,
+        ISessionFactory<IAddCollectionComplexSession> sessionFactory)
     {
-        var errors = new FluentValidator<CollectionComplexDto>(new FluentDtoValidator(), value).PerformValidation();
+        // ReSharper disable once MethodHasAsyncOverload
+        var errors = validator.Validate(value);
 
         if (!errors.IsValid)
-            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseFluentValidationResults(errors));
+        {
+            var modelStateDictionary = new ModelStateDictionary();
+            errors.AddToModelState(modelStateDictionary, string.Empty);
+            return Response.BadRequest(errors);
+        }
 
         value = await InsertCollectionComplexIntoDatabase(value, sessionFactory);
 
-        return Response.Created($"{Url}{value.Guid}", value);
+        return Response.Created($"{Url}{value.Id}", value);
     }
 
-    public async Task<IResult> CreateWithModelValidationAsync(CollectionComplexDto value, ISessionFactory<IAddCollectionComplexSession> sessionFactory)
+    public async Task<IResult> CreateWithModelValidationAsync(
+        CollectionComplexDto value,
+        ISessionFactory<IAddCollectionComplexSession> sessionFactory)
     {
-        var errors = new ModelValidator<CollectionComplexDto>(value).PerformValidation();
+        var errors = ModelValidator.PerformValidation(value);
 
         if (errors.Count != 0)
             return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseModelValidationResults(errors));
 
         value = await InsertCollectionComplexIntoDatabase(value, sessionFactory);
 
-        return Response.Created($"{Url}{value.Guid}", value);
+        return Response.Created($"{Url}{value.Id}", value);
     }
 
-    public async Task<IResult> GetObjectByIdAsync(Guid id, ISessionFactory<IGetCollectionComplexSession> sessionFactory)
+    public async Task<IResult> GetObjectByIdAsync(
+        int id,
+        ISessionFactory<IGetCollectionComplexSession> sessionFactory)
     {
         await using var session = await sessionFactory.OpenSessionAsync();
 
         var value = await session.GetCollectionComplexByIdAsync(id);
 
-        if(value == null)
+        if (value == null)
             return Response.NotFound();
 
         return Response.Ok(DeserializeCollectionComplexDto(value));
@@ -67,7 +83,7 @@ public class CollectionComplexRepo : IRepository<CollectionComplexDto, Guid, IAd
     {
         await using var session = await sessionFactory.OpenSessionAsync();
 
-        value.Guid = (Guid) await session.InsertCollectionComplexAsync(value);
+        value.Id = await session.InsertCollectionComplexAsync(value);
         await session.SaveChangesAsync();
 
         return value;
@@ -76,7 +92,8 @@ public class CollectionComplexRepo : IRepository<CollectionComplexDto, Guid, IAd
     private static CollectionComplexDto DeserializeCollectionComplexDto(CollectionComplexEntity value) =>
         new ()
         {
-            Guid = value.Id,
+            Id = value.Id,
+            Guid = value.Guid,
             OrderDetailsList = JsonConvert.DeserializeObject<List<OrderDetails>>(value.OrderDetailsList),
             ArticleList = JsonConvert.DeserializeObject<List<Article>>(value.ArticleList)
         };
