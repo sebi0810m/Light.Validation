@@ -1,4 +1,6 @@
 ﻿using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.Dto;
+using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.FluentValidator;
+using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.LightValidator;
 using Microsoft.AspNetCore.Mvc;
 using Synnotech.DatabaseAbstractions;
 using Synnotech.Linq2Db;
@@ -9,6 +11,8 @@ public static class CustomerDtoController
 {
     public static IServiceCollection AddCustomerDtoServices(this IServiceCollection services) =>
         services.AddSingleton<ParametersComplexTwoRepo>()
+                .AddSingleton<LightDtoValidator>()
+                .AddSingleton<FluentDtoValidator>()
                 .AddSessionFactoryFor<IAddCustomerSession, LinqToDbAddCustomerSession>()
                 .AddSessionFactoryFor<IGetCustomerSession, LinqToDbGetCustomerSession>();
 
@@ -17,22 +21,24 @@ public static class CustomerDtoController
         var defaultUrl = ParametersComplexTwoRepo.Url;
 
         app.MapPost($"{defaultUrl}light", async (
-                        [FromServices] ParametersComplexTwoRepo repo,
-                        [FromServices] ISessionFactory<IAddCustomerSession> sessionFactory,
-                        [FromBody] CustomerDto customer) => await repo.CreateWithLightValidationAsync(customer, sessionFactory));
+                        ParametersComplexTwoRepo repo,
+                        ISessionFactory<IAddCustomerSession> sessionFactory,
+                        FluentDtoValidator validator,
+                        CustomerDto customer) => await repo.CreateWithLightValidationAsync(customer, validator, sessionFactory));
         app.MapPost($"{defaultUrl}fluent", async (
-                        [FromServices] ParametersComplexTwoRepo repo,
-                        [FromServices] ISessionFactory<IAddCustomerSession> sessionFactory,
-                        [FromBody] CustomerDto customer) => await repo.CreateWithFluentValidationAsync(customer, sessionFactory));
+                        ParametersComplexTwoRepo repo,
+                        ISessionFactory<IAddCustomerSession> sessionFactory,
+                        FluentDtoValidator validator,
+                        CustomerDto customer) => await repo.CreateWithFluentValidationAsync(customer, validator, sessionFactory));
         app.MapPost($"{defaultUrl}model", async (
-                        [FromServices] ParametersComplexTwoRepo repo,
-                        [FromServices] ISessionFactory<IAddCustomerSession> sessionFactory,
-                        [FromBody] CustomerDto customer) => await repo.CreateWithModelValidationAsync(customer, sessionFactory));
+                        ParametersComplexTwoRepo repo,
+                        ISessionFactory<IAddCustomerSession> sessionFactory,
+                        CustomerDto customer) => await repo.CreateWithModelValidationAsync(customer, sessionFactory));
 
-        app.MapGet(defaultUrl + "{id:guid}", async (
-                       [FromServices] ParametersComplexTwoRepo repo,
-                       [FromServices] ISessionFactory<IGetCustomerSession> sessionFactory,
-                       Guid id) => await repo.GetObjectByIdAsync(id, sessionFactory));
+        app.MapGet(defaultUrl + "{id:int}", async (
+                       ParametersComplexTwoRepo repo,
+                       ISessionFactory<IGetCustomerSession> sessionFactory,
+                       int id) => await repo.GetObjectByIdAsync(id, sessionFactory));
 
         return app;
     }
