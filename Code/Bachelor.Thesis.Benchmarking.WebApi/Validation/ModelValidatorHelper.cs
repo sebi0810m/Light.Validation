@@ -18,7 +18,8 @@ public static class ModelValidatorHelper
 
         foreach (var item in result)
         {
-            modelStateDictionary.AddModelError(item.MemberNames.FirstOrDefault()!, item.ErrorMessage!);
+            // TODO: modelError gets added multiple times
+            modelStateDictionary.AddModelError(item.MemberNames.First()!, item.ErrorMessage!);
         }
 
         return modelStateDictionary;
