@@ -53,7 +53,7 @@ public class CollectionComplexRepo
         CollectionComplexDto value,
         ISessionFactory<IAddCollectionComplexSession> sessionFactory)
     {
-        var errors = ModelValidator.PerformValidation(value);
+        var errors = ModelValidatorHelper.PerformValidation(value);
 
         if (errors.Count != 0)
             return Response.BadRequest(errors.ToModelStateDictionary());

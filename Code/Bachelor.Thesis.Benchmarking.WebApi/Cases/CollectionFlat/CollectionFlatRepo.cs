@@ -52,7 +52,7 @@ public class CollectionFlatRepo
         CollectionFlatDto value,
         ISessionFactory<IAddCollectionFlatSession> sessionFactory)
     {
-        var errors = ModelValidator.PerformValidation(value);
+        var errors = ModelValidatorHelper.PerformValidation(value);
 
         if (errors.Count != 0)
             return Response.BadRequest(errors.ToModelStateDictionary());

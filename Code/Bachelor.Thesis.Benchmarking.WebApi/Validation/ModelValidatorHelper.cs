@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Validation;
 
-public static class ModelValidator
+public static class ModelValidatorHelper
 {
     public static List<ValidationResult> PerformValidation<T>(T value)
     {

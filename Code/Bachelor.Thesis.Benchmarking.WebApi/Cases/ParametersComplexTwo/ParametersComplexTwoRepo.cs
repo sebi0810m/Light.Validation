@@ -53,7 +53,7 @@ public class ParametersComplexTwoRepo
         CustomerDto value,
         ISessionFactory<IAddCustomerSession> sessionFactory)
     {
-        var errors = ModelValidator.PerformValidation(value);
+        var errors = ModelValidatorHelper.PerformValidation(value);
         
         if (errors.Count != 0)
             return Response.BadRequest(errors.ToModelStateDictionary());
