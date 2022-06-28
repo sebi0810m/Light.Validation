@@ -56,7 +56,7 @@ public class CollectionComplexRepo
         var errors = ModelValidator.PerformValidation(value);
 
         if (errors.Count != 0)
-            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseModelValidationResults(errors));
+            return Response.BadRequest(errors.ToModelStateDictionary());
 
         value = await InsertCollectionComplexIntoDatabase(value, sessionFactory);
 

@@ -55,7 +55,7 @@ public class CollectionFlatRepo
         var errors = ModelValidator.PerformValidation(value);
 
         if (errors.Count != 0)
-            return Response.BadRequest(errors);
+            return Response.BadRequest(errors.ToModelStateDictionary());
 
         value = await InsertCollectionFlatIntoDatabase(value, sessionFactory);
 
