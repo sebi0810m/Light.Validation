@@ -26,7 +26,7 @@ public class ParametersComplexTwoRepo
 
         value = await InsertEmployeeIntoDatabase(value, sessionFactory);
 
-        return Response.Created($"{Url}{value.Guid}", value);
+        return Response.Created($"{Url}{value.Id}", value);
     }
 
     public async Task<IResult> CreateWithFluentValidationAsync(
@@ -41,7 +41,7 @@ public class ParametersComplexTwoRepo
 
         value = await InsertEmployeeIntoDatabase(value, sessionFactory);
 
-        return Response.Created($"{Url}{value.Guid}", value);
+        return Response.Created($"{Url}{value.Id}", value);
     }
 
     public async Task<IResult> CreateWithModelValidationAsync(
@@ -55,7 +55,7 @@ public class ParametersComplexTwoRepo
 
         value = await InsertEmployeeIntoDatabase(value, sessionFactory);
 
-        return Response.Created($"{Url}{value.Guid}", value);
+        return Response.Created($"{Url}{value.Id}", value);
     }
 
     public async Task<IResult> GetObjectByIdAsync(

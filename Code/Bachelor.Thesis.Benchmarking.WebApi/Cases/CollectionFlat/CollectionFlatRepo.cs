@@ -25,7 +25,7 @@ public class CollectionFlatRepo
 
         value = await InsertCollectionFlatIntoDatabase(value, sessionFactory);
 
-        return Response.Created($"{Url}{value.Guid}", value);
+        return Response.Created($"{Url}{value.Id}", value);
     }
 
     public async Task<IResult> CreateWithFluentValidationAsync(
@@ -40,7 +40,7 @@ public class CollectionFlatRepo
 
         value = await InsertCollectionFlatIntoDatabase(value, sessionFactory);
 
-        return Response.Created($"{Url}{value.Guid}", value);
+        return Response.Created($"{Url}{value.Id}", value);
     }
 
     public async Task<IResult> CreateWithModelValidationAsync(
@@ -54,7 +54,7 @@ public class CollectionFlatRepo
 
         value = await InsertCollectionFlatIntoDatabase(value, sessionFactory);
 
-        return Response.Created($"{Url}{value.Guid}", value);
+        return Response.Created($"{Url}{value.Id}", value);
     }
 
     public async Task<IResult> GetObjectByIdAsync(
