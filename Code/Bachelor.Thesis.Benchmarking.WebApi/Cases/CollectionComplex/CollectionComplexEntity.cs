@@ -2,7 +2,9 @@
 
 public class CollectionComplexEntity
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
+
+    public Guid Guid { get; set; }
 
     public string OrderDetailsList { get; set; } = string.Empty;
 
