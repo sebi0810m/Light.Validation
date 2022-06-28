@@ -3,24 +3,25 @@ using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.FluentValidator;
 using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.LightValidator;
 using Bachelor.Thesis.Benchmarking.WebApi.Repository;
 using Bachelor.Thesis.Benchmarking.WebApi.Validation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using Synnotech.AspNetCore.MinimalApis.Responses;
 using Synnotech.DatabaseAbstractions;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersComplexTwo;
 
-public class ParametersComplexTwoRepo : IRepository<CustomerDto, Guid, IAddCustomerSession, IGetCustomerSession>
+public class ParametersComplexTwoRepo : IRepository<CustomerDto, int, LightDtoValidator, FluentDtoValidator, IAddCustomerSession, IGetCustomerSession>
 {
     public const string Url = "/api/complex/two/";
 
     public async Task<IResult> CreateWithLightValidationAsync(
         CustomerDto value,
+        LightDtoValidator validator,
         ISessionFactory<IAddCustomerSession> sessionFactory)
     {
-        var errors = new LightValidator<CustomerDto>(new LightDtoValidator(), value).PerformValidation();
-
-        if (!errors.IsValid)
-            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseLightValidationResults(errors));
+        if (validator.CheckForErrors(value, out var errors))
+            return Response.BadRequest(errors);
 
         value = await InsertEmployeeIntoDatabase(value, sessionFactory);
 
@@ -29,12 +30,18 @@ public class ParametersComplexTwoRepo : IRepository<CustomerDto, Guid, IAddCusto
 
     public async Task<IResult> CreateWithFluentValidationAsync(
         CustomerDto value,
+        FluentDtoValidator validator,
         ISessionFactory<IAddCustomerSession> sessionFactory)
     {
-        var errors = new FluentValidator<CustomerDto>(new FluentDtoValidator(), value).PerformValidation();
+        // ReSharper disable once MethodHasAsyncOverload
+        var errors = validator.Validate(value);
 
         if (!errors.IsValid)
-            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseFluentValidationResults(errors));
+        {
+            var modelStateDictionary = new ModelStateDictionary();
+            errors.AddToModelState(modelStateDictionary, string.Empty);
+            return Response.BadRequest(modelStateDictionary);
+        }
 
         value = await InsertEmployeeIntoDatabase(value, sessionFactory);
 
@@ -45,10 +52,10 @@ public class ParametersComplexTwoRepo : IRepository<CustomerDto, Guid, IAddCusto
         CustomerDto value,
         ISessionFactory<IAddCustomerSession> sessionFactory)
     {
-        var errors = new ModelValidator<CustomerDto>(value).PerformValidation();
-
+        var errors = ModelValidator.PerformValidation(value);
+        
         if (errors.Count != 0)
-            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseModelValidationResults(errors));
+            return Response.BadRequest(errors);
 
         value = await InsertEmployeeIntoDatabase(value, sessionFactory);
 
@@ -56,7 +63,7 @@ public class ParametersComplexTwoRepo : IRepository<CustomerDto, Guid, IAddCusto
     }
 
     public async Task<IResult> GetObjectByIdAsync(
-        Guid id,
+        int id,
         ISessionFactory<IGetCustomerSession> sessionFactory)
     {
         await using var session = await sessionFactory.OpenSessionAsync();
@@ -69,11 +76,13 @@ public class ParametersComplexTwoRepo : IRepository<CustomerDto, Guid, IAddCusto
         return Response.Ok(DeserializeCustomerDto(value));
     }
 
-    private static async Task<CustomerDto> InsertEmployeeIntoDatabase(CustomerDto value, ISessionFactory<IAddCustomerSession> sessionFactory)
+    private static async Task<CustomerDto> InsertEmployeeIntoDatabase(
+        CustomerDto value, 
+        ISessionFactory<IAddCustomerSession> sessionFactory)
     {
         await using var session = await sessionFactory.OpenSessionAsync();
 
-        value.Guid = (Guid) await session.InsertCustomerAsync(value);
+        value.Id = await session.InsertCustomerAsync(value);
         await session.SaveChangesAsync();
 
         return value;
