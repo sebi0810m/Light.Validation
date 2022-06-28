@@ -41,14 +41,14 @@ public static class Mappings
                       .Property(customer => customer.User).IsNullable(false);
 
         // CollectionFlat
-        mappingBuilder.Entity<SerializedCollectionFlat>()
+        mappingBuilder.Entity<CollectionFlatEntity>()
                       .HasTableName("CollectionFlat")
                       .Property(collection => collection.Id).IsIdentity().IsPrimaryKey()
                       .Property(collection => collection.Names).IsNullable(false)
                       .Property(collection => collection.Availability).IsNullable(false);
 
         // CollectionComplex
-        mappingBuilder.Entity<SerializedCollectionComplex>()
+        mappingBuilder.Entity<CollectionComplexEntity>()
                       .HasTableName("CollectionComplex")
                       .Property(collection => collection.Id).IsIdentity().IsPrimaryKey()
                       .Property(collection => collection.OrderDetailsList).IsNullable(false)

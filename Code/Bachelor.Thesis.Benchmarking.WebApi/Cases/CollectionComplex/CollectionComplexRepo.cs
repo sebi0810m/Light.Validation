@@ -73,7 +73,7 @@ public class CollectionComplexRepo : IRepository<CollectionComplexDto, Guid, IAd
         return value;
     }
 
-    private static CollectionComplexDto DeserializeCollectionComplexDto(SerializedCollectionComplex value) =>
+    private static CollectionComplexDto DeserializeCollectionComplexDto(CollectionComplexEntity value) =>
         new ()
         {
             Guid = value.Id,

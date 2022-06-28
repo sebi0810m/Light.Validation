@@ -13,7 +13,7 @@ public class LinqToDbAddCollectionComplexSession : AsyncSession, IAddCollectionC
 
     public Task<object> InsertCollectionComplexAsync(CollectionComplexDto collection)
     {
-        var serializedCollectionComplex = new SerializedCollectionComplex
+        var serializedCollectionComplex = new CollectionComplexEntity
         {
             Id = collection.Guid,
             OrderDetailsList = JsonConvert.SerializeObject(collection.OrderDetailsList),

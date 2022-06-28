@@ -80,7 +80,7 @@ public class CollectionFlatRepo : IRepository<CollectionFlatDto, Guid, IAddColle
         return value;
     }
 
-    private static CollectionFlatDto DeserializeCollectionFlatDto(SerializedCollectionFlat value) =>
+    private static CollectionFlatDto DeserializeCollectionFlatDto(CollectionFlatEntity value) =>
         new ()
         {
             Guid = value.Id,

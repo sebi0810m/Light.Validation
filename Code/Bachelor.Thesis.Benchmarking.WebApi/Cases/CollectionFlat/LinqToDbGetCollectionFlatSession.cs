@@ -8,7 +8,7 @@ public class LinqToDbGetCollectionFlatSession : AsyncReadOnlySession, IGetCollec
 {
     public LinqToDbGetCollectionFlatSession(DataConnection dataConnection) : base(dataConnection) { }
 
-    public Task<SerializedCollectionFlat?> GetCollectionFlatByIdAsync(Guid id) =>
-        DataConnection.GetTable<SerializedCollectionFlat>()
+    public Task<CollectionFlatEntity?> GetCollectionFlatByIdAsync(Guid id) =>
+        DataConnection.GetTable<CollectionFlatEntity>()
                       .FirstOrDefaultAsync(collection => collection.Id == id);
 }

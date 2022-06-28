@@ -12,7 +12,7 @@ public class LinqToDbAddCollectionFlatSession : AsyncSession, IAddCollectionFlat
 
     public Task<object> InsertCollectionFlatAsync(CollectionFlatDto collection)
     {
-        var serializedCollectionFlat = new SerializedCollectionFlat
+        var serializedCollectionFlat = new CollectionFlatEntity
         {
             Id = collection.Guid,
             Names = JsonConvert.SerializeObject(collection.Names),

@@ -1,6 +1,6 @@
 ﻿namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.CollectionFlat;
 
-public class SerializedCollectionFlat
+public class CollectionFlatEntity
 {
     public Guid Id { get; set; }
 

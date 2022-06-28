@@ -1,6 +1,6 @@
 ﻿namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.CollectionComplex;
 
-public class SerializedCollectionComplex
+public class CollectionComplexEntity
 {
     public Guid Id { get; set; }
 
