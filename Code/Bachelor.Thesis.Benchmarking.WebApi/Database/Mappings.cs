@@ -23,6 +23,7 @@ public static class Mappings
         mappingBuilder.Entity<EmployeeDto>()
                       .HasTableName("ParametersPrimitiveAll")
                       .Property(employee => employee.Id).IsIdentity().IsPrimaryKey()
+                      .Property(employee => employee.Guid).IsNullable(false)
                       .Property(employee => employee.Name).IsNullable(false)
                       .Property(employee => employee.Position).IsNullable(false)
                       .Property(employee => employee.Department).IsNullable(false)
@@ -36,7 +37,8 @@ public static class Mappings
         // ParametersComplexTwo
         mappingBuilder.Entity<CustomerEntity>()
                       .HasTableName("ParametersComplexTwo")
-                      .Property(customer => customer.CustomerId).IsIdentity().IsPrimaryKey()
+                      .Property(customer => customer.Id).IsIdentity().IsPrimaryKey()
+                      .Property(customer => customer.Guid).IsNullable(false)
                       .Property(customer => customer.Address).IsNullable(false)
                       .Property(customer => customer.User).IsNullable(false);
 
@@ -44,6 +46,7 @@ public static class Mappings
         mappingBuilder.Entity<CollectionFlatEntity>()
                       .HasTableName("CollectionFlat")
                       .Property(collection => collection.Id).IsIdentity().IsPrimaryKey()
+                      .Property(collection => collection.Guid).IsNullable(false)
                       .Property(collection => collection.Names).IsNullable(false)
                       .Property(collection => collection.Availability).IsNullable(false);
 
@@ -51,6 +54,7 @@ public static class Mappings
         mappingBuilder.Entity<CollectionComplexEntity>()
                       .HasTableName("CollectionComplex")
                       .Property(collection => collection.Id).IsIdentity().IsPrimaryKey()
+                      .Property(collection => collection.Guid).IsNullable(false)
                       .Property(collection => collection.OrderDetailsList).IsNullable(false)
                       .Property(collection => collection.ArticleList).IsNullable(false);
     }
