@@ -88,7 +88,7 @@ public class ParametersComplexTwoRepo
         new ()
         {
             Id = value.Id,
-            Guid = value.CustomerId,
+            Guid = value.Guid,
             User = JsonConvert.DeserializeObject<User>(value.User),
             Address = JsonConvert.DeserializeObject<Address>(value.Address)
         };

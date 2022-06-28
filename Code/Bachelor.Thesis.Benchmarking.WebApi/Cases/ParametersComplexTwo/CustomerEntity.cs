@@ -3,7 +3,7 @@
 public class CustomerEntity
 {
     public int Id { get; set; }
-    public Guid CustomerId { get; set; }
+    public Guid Guid { get; set; }
 
     public string User { get; set; } = string.Empty;
 

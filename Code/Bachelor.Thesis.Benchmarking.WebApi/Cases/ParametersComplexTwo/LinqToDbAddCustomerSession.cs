@@ -14,7 +14,7 @@ public class LinqToDbAddCustomerSession : AsyncSession, IAddCustomerSession
     {
         var serializedCustomer = new CustomerEntity
         {
-            CustomerId = customer.Guid,
+            Guid = customer.Guid,
             User = JsonSerializer.Serialize(customer.User),
             Address = JsonSerializer.Serialize(customer.Address)
         };
