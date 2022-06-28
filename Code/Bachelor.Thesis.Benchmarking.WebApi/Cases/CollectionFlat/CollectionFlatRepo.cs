@@ -2,24 +2,25 @@
 using Bachelor.Thesis.Benchmarking.CollectionFlat.Validators;
 using Bachelor.Thesis.Benchmarking.WebApi.Repository;
 using Bachelor.Thesis.Benchmarking.WebApi.Validation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using Synnotech.AspNetCore.MinimalApis.Responses;
 using Synnotech.DatabaseAbstractions;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.CollectionFlat;
 
-public class CollectionFlatRepo : IRepository<CollectionFlatDto, Guid, IAddCollectionFlatSession, IGetCollectionFlatSession>
+public class CollectionFlatRepo : IRepository<CollectionFlatDto, int, LightDtoValidator, FluentDtoValidator, IAddCollectionFlatSession, IGetCollectionFlatSession>
 {
     public const string Url = "/api/collection/flat/";
 
     public async Task<IResult> CreateWithLightValidationAsync(
         CollectionFlatDto value,
+        LightDtoValidator validator,
         ISessionFactory<IAddCollectionFlatSession> sessionFactory)
     {
-        var errors = new LightValidator<CollectionFlatDto>(new LightDtoValidator(), value).PerformValidation();
-
-        if (!errors.IsValid)
-            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseLightValidationResults(errors));
+        if (validator.CheckForErrors(value, out var errors))
+            return Response.BadRequest(errors);
 
         value = await InsertCollectionFlatIntoDatabase(value, sessionFactory);
 
@@ -28,12 +29,18 @@ public class CollectionFlatRepo : IRepository<CollectionFlatDto, Guid, IAddColle
 
     public async Task<IResult> CreateWithFluentValidationAsync(
         CollectionFlatDto value,
+        FluentDtoValidator validator,
         ISessionFactory<IAddCollectionFlatSession> sessionFactory)
     {
-        var errors = new FluentValidator<CollectionFlatDto>(new FluentDtoValidator(), value).PerformValidation();
+        // ReSharper disable once MethodHasAsyncOverload
+        var errors = validator.Validate(value);
 
         if (!errors.IsValid)
-            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseFluentValidationResults(errors));
+        {
+            var modelStateDictionary = new ModelStateDictionary();
+            errors.AddToModelState(modelStateDictionary, string.Empty);
+            return Response.BadRequest(errors);
+        }
 
         value = await InsertCollectionFlatIntoDatabase(value, sessionFactory);
 
@@ -44,10 +51,10 @@ public class CollectionFlatRepo : IRepository<CollectionFlatDto, Guid, IAddColle
         CollectionFlatDto value,
         ISessionFactory<IAddCollectionFlatSession> sessionFactory)
     {
-        var errors = new ModelValidator<CollectionFlatDto>(value).PerformValidation();
+        var errors = ModelValidator.PerformValidation(value);
 
         if (errors.Count != 0)
-            return Response.ValidationProblem(ParseValidationResultsToCorrectType.ParseModelValidationResults(errors));
+            return Response.BadRequest(errors);
 
         value = await InsertCollectionFlatIntoDatabase(value, sessionFactory);
 
@@ -55,7 +62,7 @@ public class CollectionFlatRepo : IRepository<CollectionFlatDto, Guid, IAddColle
     }
 
     public async Task<IResult> GetObjectByIdAsync(
-        Guid id,
+        int id,
         ISessionFactory<IGetCollectionFlatSession> sessionFactory)
     {
         await using var session = await sessionFactory.OpenSessionAsync();
@@ -74,7 +81,7 @@ public class CollectionFlatRepo : IRepository<CollectionFlatDto, Guid, IAddColle
     {
         await using var session = await sessionFactory.OpenSessionAsync();
 
-        value.Guid = (Guid) await session.InsertCollectionFlatAsync(value);
+        value.Id = await session.InsertCollectionFlatAsync(value);
         await session.SaveChangesAsync();
 
         return value;
@@ -83,7 +90,8 @@ public class CollectionFlatRepo : IRepository<CollectionFlatDto, Guid, IAddColle
     private static CollectionFlatDto DeserializeCollectionFlatDto(CollectionFlatEntity value) =>
         new ()
         {
-            Guid = value.Id,
+            Id = value.Id,
+            Guid = value.Guid,
             Names = JsonConvert.DeserializeObject<List<string>>(value.Names),
             Availability = JsonConvert.DeserializeObject<Dictionary<long, bool>>(value.Availability)
         };
