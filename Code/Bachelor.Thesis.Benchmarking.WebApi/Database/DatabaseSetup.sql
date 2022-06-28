@@ -1,4 +1,10 @@
-﻿CREATE TABLE ParametersPrimitiveTwo (
+﻿DROP TABLE ParametersPrimitiveTwo;
+DROP TABLE ParametersPrimitiveAll;
+DROP TABLE ParametersComplexTwo;
+DROP TABLE CollectionFlat;
+DROP TABLE CollectionComplex;
+
+CREATE TABLE ParametersPrimitiveTwo (
     [Id] INT IDENTITY(1, 1) CONSTRAINT PK_ParametersPrimitiveTwo PRIMARY KEY,
     [Name] NVARCHAR(80) NOT NULL
 );
@@ -37,5 +43,4 @@ CREATE TABLE CollectionComplex (
     [OrderDetailsList] NVARCHAR(2048) NOT NULL,
     [ArticleList] NVARCHAR(2048) NOT NULL
 );
-
 
