@@ -2,7 +2,9 @@
 
 public class CollectionFlatEntity
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
+
+    public Guid Guid { get; set; }
 
     public string Names { get; set; } = string.Empty;
 
