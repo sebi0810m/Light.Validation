@@ -8,7 +8,7 @@ public class LinqToDbGetCustomerSession : AsyncReadOnlySession, IGetCustomerSess
 {
     public LinqToDbGetCustomerSession(DataConnection dataConnection) : base(dataConnection) { }
 
-    public Task<CustomerEntity?> GetCustomerByIdAsync(Guid customerId) =>
+    public Task<CustomerEntity?> GetCustomerByIdAsync(int customerId) =>
         DataConnection.GetTable<CustomerEntity>()
-                      .FirstOrDefaultAsync(customer => customer.CustomerId == customerId);
+                      .FirstOrDefaultAsync(customer => customer.Id == customerId);
 }
