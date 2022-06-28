@@ -1,7 +1,7 @@
-﻿using Bachelor.Thesis.Benchmarking.CollectionComplex.Dto;
+﻿using System.Text.Json;
+using Bachelor.Thesis.Benchmarking.CollectionComplex.Dto;
 using LinqToDB;
 using LinqToDB.Data;
-using Newtonsoft.Json;
 using Synnotech.Linq2Db;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.CollectionComplex;
@@ -16,8 +16,8 @@ public class LinqToDbAddCollectionComplexSession : AsyncSession, IAddCollectionC
         {
             Id = collection.Id,
             Guid = collection.Guid,
-            OrderDetailsList = JsonConvert.SerializeObject(collection.OrderDetailsList),
-            ArticleList = JsonConvert.SerializeObject(collection.ArticleList)
+            OrderDetailsList = JsonSerializer.Serialize(collection.OrderDetailsList),
+            ArticleList = JsonSerializer.Serialize(collection.ArticleList)
         };
 
         return DataConnection.InsertWithInt32IdentityAsync(serializedCollectionComplex);

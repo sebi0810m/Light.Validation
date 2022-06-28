@@ -1,17 +1,15 @@
-﻿using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.Dto;
+﻿using System.Text.Json;
+using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.Dto;
 using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.FluentValidator;
 using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.LightValidator;
 using Bachelor.Thesis.Benchmarking.WebApi.Repository;
 using Bachelor.Thesis.Benchmarking.WebApi.Validation;
-using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Newtonsoft.Json;
 using Synnotech.AspNetCore.MinimalApis.Responses;
 using Synnotech.DatabaseAbstractions;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersComplexTwo;
 
-public class ParametersComplexTwoRepo 
+public class ParametersComplexTwoRepo
     : IRepository<CustomerDto, int, LightDtoValidator, FluentDtoValidator, IAddCustomerSession, IGetCustomerSession>
 {
     public const string Url = "/api/complex/two/";
@@ -34,7 +32,7 @@ public class ParametersComplexTwoRepo
         FluentDtoValidator validator,
         ISessionFactory<IAddCustomerSession> sessionFactory)
     {
-        // ReSharper disable once MethodHasAsyncOverload
+        // ReSharper disable once MethodHasAsyncOverload -- we do not call third-party services during validation, thus no async
         var errors = validator.Validate(value);
         if (!errors.IsValid)
             return Response.BadRequest(errors.ToModelStateDictionary());
@@ -49,7 +47,7 @@ public class ParametersComplexTwoRepo
         ISessionFactory<IAddCustomerSession> sessionFactory)
     {
         var errors = ModelValidatorHelper.PerformValidation(value);
-        
+
         if (errors.Count != 0)
             return Response.BadRequest(errors.ToModelStateDictionary());
 
@@ -73,7 +71,7 @@ public class ParametersComplexTwoRepo
     }
 
     private static async Task<CustomerDto> InsertEmployeeIntoDatabase(
-        CustomerDto value, 
+        CustomerDto value,
         ISessionFactory<IAddCustomerSession> sessionFactory)
     {
         await using var session = await sessionFactory.OpenSessionAsync();
@@ -89,7 +87,7 @@ public class ParametersComplexTwoRepo
         {
             Id = value.Id,
             Guid = value.Guid,
-            User = JsonConvert.DeserializeObject<User>(value.User),
-            Address = JsonConvert.DeserializeObject<Address>(value.Address)
+            User = JsonSerializer.Deserialize<User>(value.User)!,
+            Address = JsonSerializer.Deserialize<Address>(value.Address)!
         };
 }

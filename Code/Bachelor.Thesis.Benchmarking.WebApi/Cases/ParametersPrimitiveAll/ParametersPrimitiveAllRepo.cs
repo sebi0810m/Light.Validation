@@ -30,7 +30,7 @@ public class ParametersPrimitiveAllRepo
         FluentValidator validator,
         ISessionFactory<IAddEmployeeSession> sessionFactory)
     {
-        // ReSharper disable once MethodHasAsyncOverload
+        // ReSharper disable once MethodHasAsyncOverload -- we do not call third-party services during validation, thus no async
         var errors = validator.Validate(value);
         if (!errors.IsValid)
             return Response.BadRequest(errors.ToModelStateDictionary());

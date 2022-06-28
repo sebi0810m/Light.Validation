@@ -1,11 +1,9 @@
-﻿using Bachelor.Thesis.Benchmarking.CollectionComplex.Dto;
+﻿using System.Text.Json;
+using Bachelor.Thesis.Benchmarking.CollectionComplex.Dto;
 using Bachelor.Thesis.Benchmarking.CollectionComplex.FluentValidation;
 using Bachelor.Thesis.Benchmarking.CollectionComplex.LightValidation;
 using Bachelor.Thesis.Benchmarking.WebApi.Repository;
 using Bachelor.Thesis.Benchmarking.WebApi.Validation;
-using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Newtonsoft.Json;
 using Synnotech.AspNetCore.MinimalApis.Responses;
 using Synnotech.DatabaseAbstractions;
 
@@ -34,7 +32,7 @@ public class CollectionComplexRepo
         FluentDtoValidator validator,
         ISessionFactory<IAddCollectionComplexSession> sessionFactory)
     {
-        // ReSharper disable once MethodHasAsyncOverload
+        // ReSharper disable once MethodHasAsyncOverload -- we do not call third-party services during validation, thus no async
         var errors = validator.Validate(value);
         if (!errors.IsValid)
             return Response.BadRequest(errors.ToModelStateDictionary());
@@ -89,7 +87,7 @@ public class CollectionComplexRepo
         {
             Id = value.Id,
             Guid = value.Guid,
-            OrderDetailsList = JsonConvert.DeserializeObject<List<OrderDetails>>(value.OrderDetailsList),
-            ArticleList = JsonConvert.DeserializeObject<List<Article>>(value.ArticleList)
+            OrderDetailsList = JsonSerializer.Deserialize<List<OrderDetails>>(value.OrderDetailsList)!,
+            ArticleList = JsonSerializer.Deserialize<List<Article>>(value.ArticleList)!
         };
 }

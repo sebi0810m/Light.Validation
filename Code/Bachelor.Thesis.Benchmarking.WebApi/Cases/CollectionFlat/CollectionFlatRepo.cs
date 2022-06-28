@@ -1,10 +1,8 @@
-﻿using Bachelor.Thesis.Benchmarking.CollectionFlat;
+﻿using System.Text.Json;
+using Bachelor.Thesis.Benchmarking.CollectionFlat;
 using Bachelor.Thesis.Benchmarking.CollectionFlat.Validators;
 using Bachelor.Thesis.Benchmarking.WebApi.Repository;
 using Bachelor.Thesis.Benchmarking.WebApi.Validation;
-using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Newtonsoft.Json;
 using Synnotech.AspNetCore.MinimalApis.Responses;
 using Synnotech.DatabaseAbstractions;
 
@@ -33,7 +31,7 @@ public class CollectionFlatRepo
         FluentDtoValidator validator,
         ISessionFactory<IAddCollectionFlatSession> sessionFactory)
     {
-        // ReSharper disable once MethodHasAsyncOverload
+        // ReSharper disable once MethodHasAsyncOverload -- we do not call third-party services during validation, thus no async
         var errors = validator.Validate(value);
         if (!errors.IsValid)
             return Response.BadRequest(errors.ToModelStateDictionary());
@@ -88,7 +86,7 @@ public class CollectionFlatRepo
         {
             Id = value.Id,
             Guid = value.Guid,
-            Names = JsonConvert.DeserializeObject<List<string>>(value.Names),
-            Availability = JsonConvert.DeserializeObject<Dictionary<long, bool>>(value.Availability)
+            Names = JsonSerializer.Deserialize<List<string>>(value.Names)!,
+            Availability = JsonSerializer.Deserialize<Dictionary<long, bool>>(value.Availability)!
         };
 }

@@ -1,7 +1,7 @@
-﻿using Bachelor.Thesis.Benchmarking.CollectionFlat;
+﻿using System.Text.Json;
+using Bachelor.Thesis.Benchmarking.CollectionFlat;
 using LinqToDB;
 using LinqToDB.Data;
-using Newtonsoft.Json;
 using Synnotech.Linq2Db;
 
 namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.CollectionFlat;
@@ -16,8 +16,8 @@ public class LinqToDbAddCollectionFlatSession : AsyncSession, IAddCollectionFlat
         {
             Id = collection.Id,
             Guid = collection.Guid,
-            Names = JsonConvert.SerializeObject(collection.Names),
-            Availability = JsonConvert.SerializeObject(collection.Availability)
+            Names = JsonSerializer.Serialize(collection.Names),
+            Availability = JsonSerializer.Serialize(collection.Availability)
         };
 
         return DataConnection.InsertWithInt32IdentityAsync(serializedCollectionFlat);
