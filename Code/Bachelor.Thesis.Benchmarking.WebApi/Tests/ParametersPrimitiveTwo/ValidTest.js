@@ -1,10 +1,15 @@
 ﻿import http from 'k6/http';
 
-export let options = {
-    insecureSkipTLSVerify: true,
-    noConnectionReuse: false,
-    vus: 1,
-    duration: '10s'
+export const options = {
+    stages: [
+        { duration: '10s', target: 4 }, // simulate ramp-up of traffic from 1 to 4 users over 10 seconds.
+        { duration: '1m', target: 4 }, // stay at 4 users for 1 minutes
+        { duration: '10s', target: 0 }, // ramp-down to 0 users
+    ],
+    thresholds: {
+        'http_req_duration': ['p(99)<1500'], // 99% of requests must complete below 1.5s
+        'logged in successfully': ['p(99)<1500'], // 99% of requests must complete below 1.5s
+    },
 };
 
 export default function() {
