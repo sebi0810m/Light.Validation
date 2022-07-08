@@ -13,7 +13,6 @@ namespace Bachelor.Thesis.Tests.Validators;
 
 public class ParametersPrimitiveTwoModelStateTest
 {
-    private readonly UserDto _validUser = UserDto.ValidDto;
     private readonly UserDto _invalidUser = UserDto.InvalidDto;
 
     public ITestOutputHelper Output;
@@ -29,11 +28,7 @@ public class ParametersPrimitiveTwoModelStateTest
         var fluentValidator = new FluentValidator();
         var result = fluentValidator.Validate(_invalidUser);
 
-        var modelStateDictionary = new ModelStateDictionary();
-
-        result.AddToModelState(modelStateDictionary, string.Empty);
-
-        Output.WriteLine(Json.Serialize(modelStateDictionary));
+        Output.WriteLine(Json.Serialize(result.FluentWriteInLightValidationResult(_invalidUser))); // TODO: IsValid is true => should be false
 
         result.IsValid.MustBe(false);
     }
@@ -54,15 +49,8 @@ public class ParametersPrimitiveTwoModelStateTest
     {
         var errors = new List<ValidationResult>();
         var result = Validator.TryValidateObject(_invalidUser, new ValidationContext(_invalidUser), errors, true);
-
-        var modelStateDictionary = new ModelStateDictionary();
-
-        foreach (var item in errors)
-        {
-            modelStateDictionary.AddModelError(item.MemberNames.FirstOrDefault()!, item.ErrorMessage!);
-        }
-
-        Output.WriteLine(Json.Serialize(modelStateDictionary));
+        
+        Output.WriteLine(Json.Serialize(errors.ModelWriteInLightValidationResult(_invalidUser))); // TODO: IsValid is true => should be false
 
         result.MustBe(false);
     }
