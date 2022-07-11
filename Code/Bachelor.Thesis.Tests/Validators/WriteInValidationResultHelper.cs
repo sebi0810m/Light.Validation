@@ -8,31 +8,27 @@ namespace Bachelor.Thesis.Tests.Validators;
 
 public static class WriteInValidationResultHelper
 {
-    private static readonly Dictionary<string, string> Errors = new ();
-
     public static ValidationResult<T> FluentWriteInLightValidationResult<T>(this ValidationResult result, T value)
     {
-        if(Errors.Count > 0) 
-            Errors.Clear();
+        var errors = new Dictionary<string, object>();
 
         foreach (var error in result.Errors)
         {
-            Errors.Add(error.PropertyName, error.ErrorMessage);
+            errors.Add(error.PropertyName, error.ErrorMessage);
         }
 
-        return new ValidationResult<T>(value, Errors); 
+        return new ValidationResult<T>(value, errors); 
     }
 
     public static ValidationResult<T> ModelWriteInLightValidationResult<T>(this List<ModelValidationResult> result, T value)
     {
-        if (Errors.Count > 0)
-            Errors.Clear();
+        var errors = new Dictionary<string, object>();
 
         foreach (var error in result)
         {
-            Errors.Add(error.MemberNames.FirstOrDefault()!, error.ErrorMessage!);
+            errors.Add(error.MemberNames.FirstOrDefault()!, error.ErrorMessage!);
         }
 
-        return new ValidationResult<T>(value, Errors);
+        return new ValidationResult<T>(value, errors);
     }
 }
