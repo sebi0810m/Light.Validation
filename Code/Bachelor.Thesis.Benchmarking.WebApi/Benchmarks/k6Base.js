@@ -1,8 +1,8 @@
 ﻿export const baseOptions = {
     stages: [
-        { duration: "2s", target: 5 }, // simulate ramp-up of traffic from 1 to 100 users over 20 seconds.
-        { duration: "30s", target: 5 }, // stay at 100 users for 3 minutes
-        { duration: "2s", target: 0 } // ramp-down to 0 users
+        { duration: "20s", target: 40 }, // simulate ramp-up of traffic from 1 to 100 users over 20 seconds.
+        { duration: "3m", target: 40 }, // stay at 100 users for 3 minutes
+        { duration: "20s", target: 0 } // ramp-down to 0 users
     ]
 };
 
