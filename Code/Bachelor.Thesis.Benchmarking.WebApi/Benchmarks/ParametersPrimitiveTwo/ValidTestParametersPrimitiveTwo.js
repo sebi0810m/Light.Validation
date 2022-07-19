@@ -5,7 +5,7 @@ import { baseOptions, baseParametersPrimitiveTwoUrl, baseParams } from "../k6Bas
 export const options = baseOptions;
 
 export default function() {
-    const url = baseParametersPrimitiveTwoUrl; // use with 'k6 run -e VALIDATION_NAME=xxxx ValidTest.js
+    const url = baseParametersPrimitiveTwoUrl;
 
     const payload = JSON.stringify({
         id: "42",
