@@ -12,4 +12,10 @@ export const baseParams = {
     }
 };
 
-export const baseUrl = "https://localhost:7089/api/";
+const baseUrl = "https://localhost:7089/api/";
+
+export const baseParametersPrimitiveTwoUrl = `${baseUrl}primitive/two/${__ENV.VALIDATION_NAME}`; // use with 'k6 run -e VALIDATION_NAME=xxxx ValidTest.js
+export const baseParametersPrimitiveAllUrl = `${baseUrl}primitive/all/${__ENV.VALIDATION_NAME}`;
+export const baseParametersComplexTwoUrl = `${baseUrl}complex/two/${__ENV.VALIDATION_NAME}`;
+export const baseParametersCollectionFlatUrl = `${baseUrl}collection/flat/${__ENV.VALIDATION_NAME}`;
+export const baseParametersCollectionComplexUrl = `${baseUrl}collection/complex/${__ENV.VALIDATION_NAME}`;
