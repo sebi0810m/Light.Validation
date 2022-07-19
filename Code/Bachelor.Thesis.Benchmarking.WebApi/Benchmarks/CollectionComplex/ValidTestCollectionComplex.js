@@ -46,3 +46,9 @@ export default function () {
 
     sleep(1);
 }
+
+export function handleSummary(data) {
+    return {
+        'result.json': JSON.stringify(data)
+    }
+}
