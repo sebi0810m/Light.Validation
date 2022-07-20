@@ -19,7 +19,6 @@ public class EmployeeDto
 
     public static EmployeeDto InvalidEmployeeDto = new ()
     {
-        Guid = new (),
         Name = "   x     ",
         Position = 'a',
         Department = 98,
