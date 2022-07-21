@@ -20,7 +20,7 @@ export const baseParametersComplexTwoUrl = `${baseUrl}complex/two/${__ENV.VALIDA
 export const baseParametersCollectionFlatUrl = `${baseUrl}collection/flat/${__ENV.VALIDATION_NAME}`;
 export const baseParametersCollectionComplexUrl = `${baseUrl}collection/complex/${__ENV.VALIDATION_NAME}`;
 
-export function resultJsonModifier(data) {
+export function exportResultHelper(data) {
     return {
         'result.json':
             "{\n\t\"http_req_duration\": " +

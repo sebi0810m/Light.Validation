@@ -1,6 +1,6 @@
 import http from "k6/http";
 import { check, sleep } from "k6";
-import { baseOptions, baseParametersCollectionComplexUrl, baseParams, resultJsonModifier } from "../k6Base.js";
+import { baseOptions, baseParametersCollectionComplexUrl, baseParams, exportResultHelper } from "../k6Base.js";
 
 export const options = baseOptions;
 
@@ -47,5 +47,5 @@ export default function () {
 }
 
 export function handleSummary(data) {
-    return resultJsonModifier(data);
+    return exportResultHelper(data);
 }
