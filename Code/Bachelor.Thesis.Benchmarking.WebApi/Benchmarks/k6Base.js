@@ -1,8 +1,8 @@
 ﻿export const baseOptions = {
     stages: [
-        { duration: "20s", target: 40 }, // simulate ramp-up of traffic from 1 to 100 users over 20 seconds.
-        { duration: "3m", target: 40 }, // stay at 100 users for 3 minutes
-        { duration: "20s", target: 0 } // ramp-down to 0 users
+        { duration: "1s", target: 4 }, // simulate ramp-up of traffic from 1 to 100 users over 20 seconds.
+        { duration: "5s", target: 4 }, // stay at 100 users for 3 minutes
+        { duration: "1s", target: 0 } // ramp-down to 0 users
     ]
 };
 
@@ -19,3 +19,14 @@ export const baseParametersPrimitiveAllUrl = `${baseUrl}primitive/all/${__ENV.VA
 export const baseParametersComplexTwoUrl = `${baseUrl}complex/two/${__ENV.VALIDATION_NAME}`;
 export const baseParametersCollectionFlatUrl = `${baseUrl}collection/flat/${__ENV.VALIDATION_NAME}`;
 export const baseParametersCollectionComplexUrl = `${baseUrl}collection/complex/${__ENV.VALIDATION_NAME}`;
+
+export function resultJsonModifier(data) {
+    return {
+        'result.json':
+            "{\n\t\"http_req_duration\": " +
+                JSON.stringify(data.metrics.http_req_duration, "http_req_duration") +
+                ",\n\"http_req_waiting\": " +
+                JSON.stringify(data.metrics.http_req_waiting, "http_req_waiting") +
+                "\n}"
+    }
+}
