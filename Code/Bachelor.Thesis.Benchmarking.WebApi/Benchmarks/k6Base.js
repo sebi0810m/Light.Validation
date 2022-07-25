@@ -1,8 +1,10 @@
-﻿export const baseOptions = {
+﻿import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
+
+export const baseOptions = {
     stages: [
-        { duration: "20s", target: 100 }, // simulate ramp-up of traffic from 1 to 100 users over 20 seconds.
-        { duration: "3m", target: 100 }, // stay at 100 users for 3 minutes
-        { duration: "20s", target: 0 } // ramp-down to 0 users
+        { duration: "2s", target: 5 }, // simulate ramp-up of traffic from 1 to 100 users over 20 seconds.
+        { duration: "5s", target: 5 }, // stay at 100 users for 3 minutes
+        { duration: "2s", target: 0 } // ramp-down to 0 users
     ]
 };
 
@@ -21,12 +23,24 @@ export const baseParametersCollectionFlatUrl = `${baseUrl}collection/flat/${__EN
 export const baseParametersCollectionComplexUrl = `${baseUrl}collection/complex/${__ENV.VALIDATION_NAME}`;
 
 export function exportResultHelper(data) {
+    let durations = data.metrics.http_req_duration.values;
+
+    // had to write it manually, because k6 doesn't follow a specific order when writing into output
+    // so sometimes avg was the first value, but sometimes it was max
+    // couldn't make it consistent, so joining it manually is the easiest way
+    let resultString = "times in milliseconds\n" +
+        "avg,min,med,max\n" +
+        durations.avg +
+        "," +
+        durations.min +
+        "," +
+        durations.med +
+        "," +
+        durations.max +
+        "\n";
+
     return {
-        'result.json':
-            "{\n\t\"http_req_duration\": " +
-                JSON.stringify(data.metrics.http_req_duration, "http_req_duration") +
-                ",\n\"http_req_waiting\": " +
-                JSON.stringify(data.metrics.http_req_waiting, "http_req_waiting") +
-                "\n}"
+        'stdout': textSummary(data, { indent: ' ', enableColors: true }),
+        'result.csv': resultString
     }
 }

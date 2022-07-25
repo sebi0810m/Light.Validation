@@ -1,121 +1,121 @@
 k6 run -e VALIDATION_NAME=light .\ParametersPrimitiveTwo\ValidTestParametersPrimitiveTwo.js
-rm .\Results\ResultParametersPrimitiveTwoValidLight.json
-mv result.json .\Results\ResultParametersPrimitiveTwoValidLight.json
+rm .\Results\ResultParametersPrimitiveTwoValidLight.csv
+mv result.csv .\Results\ResultParametersPrimitiveTwoValidLight.csv
 
 k6 run -e VALIDATION_NAME=fluent .\ParametersPrimitiveTwo\ValidTestParametersPrimitiveTwo.js
-rm .\Results\ResultParametersPrimitiveTwoValidFluent.json
-mv result.json .\Results\ResultParametersPrimitiveTwoValidFluent.json
+rm .\Results\ResultParametersPrimitiveTwoValidFluent.csv
+mv result.csv .\Results\ResultParametersPrimitiveTwoValidFluent.csv
 
 k6 run -e VALIDATION_NAME=model .\ParametersPrimitiveTwo\ValidTestParametersPrimitiveTwo.js
-rm .\Results\ResultParametersPrimitiveTwoValidModel.json
-mv result.json .\Results\ResultParametersPrimitiveTwoValidModel.json
+rm .\Results\ResultParametersPrimitiveTwoValidModel.csv
+mv result.csv .\Results\ResultParametersPrimitiveTwoValidModel.csv
 
 k6 run -e VALIDATION_NAME=light .\ParametersPrimitiveTwo\InvalidTestParametersPrimitiveTwo.js
-rm .\Results\ResultParametersPrimitiveTwoInvalidLight.json
-mv result.json .\Results\ResultParametersPrimitiveTwoInvalidLight.json
+rm .\Results\ResultParametersPrimitiveTwoInvalidLight.csv
+mv result.csv .\Results\ResultParametersPrimitiveTwoInvalidLight.csv
 
 k6 run -e VALIDATION_NAME=fluent .\ParametersPrimitiveTwo\InvalidTestParametersPrimitiveTwo.js
-rm .\Results\ResultParametersPrimitiveTwoInvalidFluent.json
-mv result.json .\Results\ResultParametersPrimitiveTwoInvalidFluent.json
+rm .\Results\ResultParametersPrimitiveTwoInvalidFluent.csv
+mv result.csv .\Results\ResultParametersPrimitiveTwoInvalidFluent.csv
 
 k6 run -e VALIDATION_NAME=model .\ParametersPrimitiveTwo\InvalidTestParametersPrimitiveTwo.js
-rm .\Results\ResultParametersPrimitiveTwoInvalidModel.json
-mv result.json .\Results\ResultParametersPrimitiveTwoInvalidModel.json
+rm .\Results\ResultParametersPrimitiveTwoInvalidModel.csv
+mv result.csv .\Results\ResultParametersPrimitiveTwoInvalidModel.csv
 
 k6 run -e VALIDATION_NAME=light .\ParametersPrimitiveAll\ValidTestParametersPrimitiveAll.js
-rm .\Results\ResultParametersPrimitiveAllValidLight.json
-mv result.json .\Results\ResultParametersPrimitiveAllValidLight.json
+rm .\Results\ResultParametersPrimitiveAllValidLight.csv
+mv result.csv .\Results\ResultParametersPrimitiveAllValidLight.csv
 
 k6 run -e VALIDATION_NAME=fluent .\ParametersPrimitiveAll\ValidTestParametersPrimitiveAll.js
-rm .\Results\ResultParametersPrimitiveAllValidFluent.json
-mv result.json .\Results\ResultParametersPrimitiveAllValidFluent.json
+rm .\Results\ResultParametersPrimitiveAllValidFluent.csv
+mv result.csv .\Results\ResultParametersPrimitiveAllValidFluent.csv
 
 k6 run -e VALIDATION_NAME=model .\ParametersPrimitiveAll\ValidTestParametersPrimitiveAll.js
-rm .\Results\ResultParametersPrimitiveAllValidModel.json
-mv result.json .\Results\ResultParametersPrimitiveAllValidModel.json
+rm .\Results\ResultParametersPrimitiveAllValidModel.csv
+mv result.csv .\Results\ResultParametersPrimitiveAllValidModel.csv
 
 k6 run -e VALIDATION_NAME=light .\ParametersPrimitiveAll\InvalidTestParametersPrimitiveAll.js
-rm .\Results\ResultParametersPrimitiveAllInvalidLight.json
-mv result.json .\Results\ResultParametersPrimitiveAllInvalidLight.json
+rm .\Results\ResultParametersPrimitiveAllInvalidLight.csv
+mv result.csv .\Results\ResultParametersPrimitiveAllInvalidLight.csv
 
 k6 run -e VALIDATION_NAME=fluent .\ParametersPrimitiveAll\InvalidTestParametersPrimitiveAll.js
-rm .\Results\ResultParametersPrimitiveAllInvalidFluent.json
-mv result.json .\Results\ResultParametersPrimitiveAllInvalidFluent.json
+rm .\Results\ResultParametersPrimitiveAllInvalidFluent.csv
+mv result.csv .\Results\ResultParametersPrimitiveAllInvalidFluent.csv
 
 k6 run -e VALIDATION_NAME=model .\ParametersPrimitiveAll\InvalidTestParametersPrimitiveAll.js
-rm .\Results\ResultParametersPrimitiveAllInvalidModel.json
-mv result.json .\Results\ResultParametersPrimitiveAllInvalidModel.json
+rm .\Results\ResultParametersPrimitiveAllInvalidModel.csv
+mv result.csv .\Results\ResultParametersPrimitiveAllInvalidModel.csv
 
 k6 run -e VALIDATION_NAME=light .\ParametersComplexTwo\ValidTestParametersComplexTwo.js
-rm .\Results\ResultParametersComplexTwoValidLight.json
-mv result.json .\Results\ResultParametersComplexTwoValidLight.json
+rm .\Results\ResultParametersComplexTwoValidLight.csv
+mv result.csv .\Results\ResultParametersComplexTwoValidLight.csv
 
 k6 run -e VALIDATION_NAME=fluent .\ParametersComplexTwo\ValidTestParametersComplexTwo.js
-rm .\Results\ResultParametersComplexTwoValidFluent.json
-mv result.json .\Results\ResultParametersComplexTwoValidFluent.json
+rm .\Results\ResultParametersComplexTwoValidFluent.csv
+mv result.csv .\Results\ResultParametersComplexTwoValidFluent.csv
 
 k6 run -e VALIDATION_NAME=model .\ParametersComplexTwo\ValidTestParametersComplexTwo.js
-rm .\Results\ResultParametersComplexTwoValidModel.json
-mv result.json .\Results\ResultParametersComplexTwoValidModel.json
+rm .\Results\ResultParametersComplexTwoValidModel.csv
+mv result.csv .\Results\ResultParametersComplexTwoValidModel.csv
 
 k6 run -e VALIDATION_NAME=light .\ParametersComplexTwo\InvalidTestParametersComplexTwo.js
-rm .\Results\ResultParametersComplexTwoInvalidLight.json
-mv result.json .\Results\ResultParametersComplexTwoInvalidLight.json
+rm .\Results\ResultParametersComplexTwoInvalidLight.csv
+mv result.csv .\Results\ResultParametersComplexTwoInvalidLight.csv
 
 k6 run -e VALIDATION_NAME=fluent .\ParametersComplexTwo\InvalidTestParametersComplexTwo.js
-rm .\Results\ResultParametersComplexTwoInvalidFluent.json
-mv result.json .\Results\ResultParametersComplexTwoInvalidFluent.json
+rm .\Results\ResultParametersComplexTwoInvalidFluent.csv
+mv result.csv .\Results\ResultParametersComplexTwoInvalidFluent.csv
 
 k6 run -e VALIDATION_NAME=model .\ParametersComplexTwo\InvalidTestParametersComplexTwo.js
-rm .\Results\ResultParametersComplexTwoInvalidModel.json
-mv result.json .\Results\ResultParametersComplexTwoInvalidModel.json
+rm .\Results\ResultParametersComplexTwoInvalidModel.csv
+mv result.csv .\Results\ResultParametersComplexTwoInvalidModel.csv
 
 k6 run -e VALIDATION_NAME=light .\CollectionFlat\ValidTestCollectionFlat.js
-rm .\Results\ResultCollectionFlatValidLight.json
-mv result.json .\Results\ResultCollectionFlatValidLight.json
+rm .\Results\ResultCollectionFlatValidLight.csv
+mv result.csv .\Results\ResultCollectionFlatValidLight.csv
 
 k6 run -e VALIDATION_NAME=fluent .\CollectionFlat\ValidTestCollectionFlat.js
-rm .\Results\ResultCollectionFlatValidFluent.json
-mv result.json .\Results\ResultCollectionFlatValidFluent.json
+rm .\Results\ResultCollectionFlatValidFluent.csv
+mv result.csv .\Results\ResultCollectionFlatValidFluent.csv
 
 k6 run -e VALIDATION_NAME=model .\CollectionFlat\ValidTestCollectionFlat.js
-rm .\Results\ResultCollectionFlatValidModel.json
-mv result.json .\Results\ResultCollectionFlatValidModel.json
+rm .\Results\ResultCollectionFlatValidModel.csv
+mv result.csv .\Results\ResultCollectionFlatValidModel.csv
 
 k6 run -e VALIDATION_NAME=light .\CollectionFlat\InvalidTestCollectionFlat.js
-rm .\Results\ResultCollectionFlatInvalidLight.json
-mv result.json .\Results\ResultCollectionFlatInvalidLight.json
+rm .\Results\ResultCollectionFlatInvalidLight.csv
+mv result.csv .\Results\ResultCollectionFlatInvalidLight.csv
 
 k6 run -e VALIDATION_NAME=fluent .\CollectionFlat\InvalidTestCollectionFlat.js
-rm .\Results\ResultCollectionFlatInvalidFluent.json
-mv result.json .\Results\ResultCollectionFlatInvalidFluent.json
+rm .\Results\ResultCollectionFlatInvalidFluent.csv
+mv result.csv .\Results\ResultCollectionFlatInvalidFluent.csv
 
 k6 run -e VALIDATION_NAME=model .\CollectionFlat\InvalidTestCollectionFlat.js
-rm .\Results\ResultCollectionFlatInvalidModel.json
-mv result.json .\Results\ResultCollectionFlatInvalidModel.json
+rm .\Results\ResultCollectionFlatInvalidModel.csv
+mv result.csv .\Results\ResultCollectionFlatInvalidModel.csv
 
 k6 run -e VALIDATION_NAME=light .\CollectionComplex\ValidTestCollectionComplex.js
-rm .\Results\ResultCollectionComplexValidLight.json
-mv result.json .\Results\ResultCollectionComplexValidLight.json
+rm .\Results\ResultCollectionComplexValidLight.csv
+mv result.csv .\Results\ResultCollectionComplexValidLight.csv
 
 k6 run -e VALIDATION_NAME=fluent .\CollectionComplex\ValidTestCollectionComplex.js
-rm .\Results\ResultCollectionComplexValidFluent.json
-mv result.json .\Results\ResultCollectionComplexValidFluent.json
+rm .\Results\ResultCollectionComplexValidFluent.csv
+mv result.csv .\Results\ResultCollectionComplexValidFluent.csv
 
 k6 run -e VALIDATION_NAME=model .\CollectionComplex\ValidTestCollectionComplex.js
-rm .\Results\ResultCollectionComplexValidModel.json
-mv result.json .\Results\ResultCollectionComplexValidModel.json
+rm .\Results\ResultCollectionComplexValidModel.csv
+mv result.csv .\Results\ResultCollectionComplexValidModel.csv
 
 k6 run -e VALIDATION_NAME=light .\CollectionComplex\InvalidTestCollectionComplex.js
-rm .\Results\ResultCollectionComplexInvalidLight.json
-mv result.json .\Results\ResultCollectionComplexInvalidLight.json
+rm .\Results\ResultCollectionComplexInvalidLight.csv
+mv result.csv .\Results\ResultCollectionComplexInvalidLight.csv
 
 k6 run -e VALIDATION_NAME=fluent .\CollectionComplex\InvalidTestCollectionComplex.js
-rm .\Results\ResultCollectionComplexInvalidFluent.json
-mv result.json .\Results\ResultCollectionComplexInvalidFluent.json
+rm .\Results\ResultCollectionComplexInvalidFluent.csv
+mv result.csv .\Results\ResultCollectionComplexInvalidFluent.csv
 
 k6 run -e VALIDATION_NAME=model .\CollectionComplex\InvalidTestCollectionComplex.js
-rm .\Results\ResultCollectionComplexInvalidModel.json
-mv result.json .\Results\ResultCollectionComplexInvalidModel.json
+rm .\Results\ResultCollectionComplexInvalidModel.csv
+mv result.csv .\Results\ResultCollectionComplexInvalidModel.csv
 
 echo done
