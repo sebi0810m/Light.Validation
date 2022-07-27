@@ -4,6 +4,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace Bachelor.Thesis.Benchmarking.ParametersPrimitiveTwo;
 
+[RPlotExporter]
 public class InvalidUserDtoBenchmarks
 {
     public UserDto Dto = new() { Id = -1, Name = String.Empty };

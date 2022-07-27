@@ -1,17 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Bachelor.Thesis.Benchmarking.ParametersPrimitiveTwo.Validators;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Configs;
 
 namespace Bachelor.Thesis.Benchmarking.ParametersPrimitiveTwo;
 
+[RPlotExporter]
 public class ValidUserDtoBenchmarks
 {
+    public UserDto Dto = UserDto.ValidDto;
     public FluentValidator FluentValidator = new ();
 
     public LightValidator LightValidator = new ();
-
-    public UserDto Dto = UserDto.ValidDto;
 
     [Benchmark(Baseline = true)]
     public object? CheckViaLightValidator()

@@ -7,7 +7,6 @@ public class FluentValidator : AbstractValidator<EmployeeDto>
 {
     public FluentValidator()
     {
-        RuleFor(employee => employee.Id).NotEmpty();
         RuleFor(employee => employee.Name).NotEmpty().Length(2, 80);
         RuleFor(employee => employee.Position).NotEmpty().InclusiveBetween('A', 'Z');
         RuleFor(employee => employee.Department).NotEmpty().InclusiveBetween((short) 100, (short) 999);

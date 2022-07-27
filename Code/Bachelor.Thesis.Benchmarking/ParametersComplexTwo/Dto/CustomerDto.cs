@@ -16,6 +16,10 @@ public class CustomerDto : IValidatableObject
         Address = Address.InvalidAddress
     };
 
+    public int Id { get; set; }
+    
+    public Guid Guid { get; set; } = Guid.NewGuid();
+
     [Required]
     public User User { get; set; } = new ();
 
@@ -28,10 +32,10 @@ public class CustomerDto : IValidatableObject
         var resultsAddress = new List<ValidationResult>();
         var results = new List<ValidationResult>();
 
-        Validator.TryValidateObject(User, new ValidationContext(User), resultsUser);
+        Validator.TryValidateObject(User, new ValidationContext(User), resultsUser, true);
         results.AddRange(resultsUser);
 
-        Validator.TryValidateObject(Address, new ValidationContext(Address), resultsAddress);
+        Validator.TryValidateObject(Address, new ValidationContext(Address), resultsAddress, true);
         results.AddRange(resultsAddress);
 
         return results;

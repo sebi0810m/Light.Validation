@@ -43,6 +43,10 @@ public class CollectionComplexDto : IValidatableObject
         }
     };
 
+    public int Id { get; set; }
+
+    public Guid Guid { get; set; } = Guid.NewGuid();
+
     [Required]
     [MinLength(1), MaxLength(10)]
     public List<OrderDetails> OrderDetailsList { get; set; } = new ();
@@ -60,15 +64,17 @@ public class CollectionComplexDto : IValidatableObject
         foreach (var order in OrderDetailsList)
         {
             Validator.TryValidateObject(order, new ValidationContext(order), resultsOrderDetailsList, true);
-            results.AddRange(resultsOrderDetailsList);
         }
+
+        results.AddRange(resultsOrderDetailsList);
 
         foreach (var article in ArticleList)
         {
             Validator.TryValidateObject(article, new ValidationContext(article), resultsArticleList, true);
-            results.AddRange(resultsArticleList);
         }
 
+        results.AddRange(resultsArticleList);
+        
         return results;
     }
 }

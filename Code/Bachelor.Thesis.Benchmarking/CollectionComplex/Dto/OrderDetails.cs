@@ -8,7 +8,7 @@ public class OrderDetails
     {
         OrderId = 10010,
         ProductId = 20010,
-        Date = DateTime.Parse("2022-04-27"),
+        Date = new DateTime(2022, 04, 27),
         Quantity = 20,
         PricePaid = 100
     };
@@ -17,7 +17,7 @@ public class OrderDetails
     {
         OrderId = 1001,
         ProductId = 2001,
-        Date = DateTime.Parse("2023-04-27"),
+        Date = new DateTime(2023, 04, 27),
         Quantity = -8,
         PricePaid = 2000000
     };

@@ -1,0 +1,93 @@
+﻿using System.Text.Json;
+using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.Dto;
+using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.FluentValidator;
+using Bachelor.Thesis.Benchmarking.ParametersComplexTwo.LightValidator;
+using Bachelor.Thesis.Benchmarking.WebApi.Repository;
+using Bachelor.Thesis.Benchmarking.WebApi.Validation;
+using Synnotech.AspNetCore.MinimalApis.Responses;
+using Synnotech.DatabaseAbstractions;
+
+namespace Bachelor.Thesis.Benchmarking.WebApi.Cases.ParametersComplexTwo;
+
+public class ParametersComplexTwoRepo
+    : IRepository<CustomerDto, int, LightDtoValidator, FluentDtoValidator, IAddCustomerSession, IGetCustomerSession>
+{
+    public const string Url = "/api/complex/two/";
+
+    public async Task<IResult> CreateWithLightValidationAsync(
+        CustomerDto value,
+        LightDtoValidator validator,
+        ISessionFactory<IAddCustomerSession> sessionFactory)
+    {
+        if (validator.CheckForErrors(value, out var errors))
+            return Response.BadRequest(errors);
+
+        value = await InsertEmployeeIntoDatabase(value, sessionFactory);
+
+        return Response.Created($"{Url}{value.Id}", value);
+    }
+
+    public async Task<IResult> CreateWithFluentValidationAsync(
+        CustomerDto value,
+        FluentDtoValidator validator,
+        ISessionFactory<IAddCustomerSession> sessionFactory)
+    {
+        // ReSharper disable once MethodHasAsyncOverload -- we do not call third-party services during validation, thus no async
+        var errors = validator.Validate(value);
+        if (!errors.IsValid)
+            return Response.BadRequest(errors.ToModelStateDictionary());
+
+        value = await InsertEmployeeIntoDatabase(value, sessionFactory);
+
+        return Response.Created($"{Url}{value.Id}", value);
+    }
+
+    public async Task<IResult> CreateWithModelValidationAsync(
+        CustomerDto value,
+        ISessionFactory<IAddCustomerSession> sessionFactory)
+    {
+        var errors = ModelValidatorHelper.PerformValidation(value);
+
+        if (errors.Count != 0)
+            return Response.BadRequest(errors.ToModelStateDictionary());
+
+        value = await InsertEmployeeIntoDatabase(value, sessionFactory);
+
+        return Response.Created($"{Url}{value.Id}", value);
+    }
+
+    public async Task<IResult> GetObjectByIdAsync(
+        int id,
+        ISessionFactory<IGetCustomerSession> sessionFactory)
+    {
+        await using var session = await sessionFactory.OpenSessionAsync();
+
+        var value = await session.GetCustomerByIdAsync(id);
+
+        if (value == null)
+            return Response.NotFound();
+
+        return Response.Ok(DeserializeCustomerDto(value));
+    }
+
+    private static async Task<CustomerDto> InsertEmployeeIntoDatabase(
+        CustomerDto value,
+        ISessionFactory<IAddCustomerSession> sessionFactory)
+    {
+        await using var session = await sessionFactory.OpenSessionAsync();
+
+        value.Id = await session.InsertCustomerAsync(value);
+        await session.SaveChangesAsync();
+
+        return value;
+    }
+
+    private static CustomerDto DeserializeCustomerDto(CustomerEntity value) =>
+        new ()
+        {
+            Id = value.Id,
+            Guid = value.Guid,
+            User = JsonSerializer.Deserialize<User>(value.User)!,
+            Address = JsonSerializer.Deserialize<Address>(value.Address)!
+        };
+}

@@ -6,7 +6,6 @@ public class EmployeeDto
 {
     public static EmployeeDto ValidEmployeeDto = new ()
     {
-        Id = Guid.NewGuid(),
         Name = "John Doe",
         Position = 'B',
         Department = 420,
@@ -20,7 +19,6 @@ public class EmployeeDto
 
     public static EmployeeDto InvalidEmployeeDto = new ()
     {
-        Id = new (),
         Name = "   x     ",
         Position = 'a',
         Department = 98,
@@ -31,9 +29,10 @@ public class EmployeeDto
         HourlySalary = new decimal(8.50),
         DateEmployed = new DateTime(2023, 01, 01)
     };
-
-    [Required]
-    public Guid Id { get; set; }
+    
+    public int Id { get; set; }
+    
+    public Guid Guid { get; set; } = Guid.NewGuid();
 
     [Required]
     [StringLength(80, MinimumLength = 2)]

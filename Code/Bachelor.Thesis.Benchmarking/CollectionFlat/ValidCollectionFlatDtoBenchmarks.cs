@@ -4,6 +4,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace Bachelor.Thesis.Benchmarking.CollectionFlat;
 
+[RPlotExporter]
 public class ValidCollectionFlatDtoBenchmarks
 {
     public CollectionFlatDto Dto = CollectionFlatDto.ValidDto;

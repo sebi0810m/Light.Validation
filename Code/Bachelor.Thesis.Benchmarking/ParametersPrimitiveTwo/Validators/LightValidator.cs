@@ -1,5 +1,6 @@
 ﻿using Light.Validation;
 using Light.Validation.Checks;
+using Range = Light.Validation.Tools.Range;
 
 namespace Bachelor.Thesis.Benchmarking.ParametersPrimitiveTwo.Validators;
 
@@ -13,7 +14,7 @@ public class LightValidator : Validator<UserDto>
 
         value.Name = context.Check(value.Name)
                             .IsNotNullOrWhiteSpace()
-                            .IsShorterThan(80);
+                            .HasLengthIn(Range.FromInclusive(2).ToInclusive(80));
 
         return value;
     }

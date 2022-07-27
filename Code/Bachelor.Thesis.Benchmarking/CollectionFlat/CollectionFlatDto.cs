@@ -43,6 +43,10 @@ public class CollectionFlatDto
         }
     };
 
+    public int Id { get; set; }
+
+    public Guid Guid { get; set; } = Guid.NewGuid();
+
     [Required]
     [MinLength(1), MaxLength(10)]
     [NoStringInCollectionBiggerThan(20)]
