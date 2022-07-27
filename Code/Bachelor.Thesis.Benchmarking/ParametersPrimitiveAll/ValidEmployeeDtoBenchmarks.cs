@@ -4,6 +4,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace Bachelor.Thesis.Benchmarking.ParametersPrimitiveAll;
 
+[RPlotExporter]
 public class ValidEmployeeDtoBenchmarks
 {
     public EmployeeDto EmployeeDto = EmployeeDto.ValidEmployeeDto;

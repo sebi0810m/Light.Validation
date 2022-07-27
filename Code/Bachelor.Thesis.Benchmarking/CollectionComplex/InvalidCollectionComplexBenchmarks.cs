@@ -6,6 +6,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace Bachelor.Thesis.Benchmarking.CollectionComplex;
 
+[RPlotExporter]
 public class InvalidCollectionComplexBenchmarks
 {
     public CollectionComplexDto Dto = CollectionComplexDto.InvalidDto;

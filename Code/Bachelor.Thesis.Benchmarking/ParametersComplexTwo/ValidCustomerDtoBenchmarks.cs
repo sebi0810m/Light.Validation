@@ -6,6 +6,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace Bachelor.Thesis.Benchmarking.ParametersComplexTwo;
 
+[RPlotExporter]
 public class ValidCustomerDtoBenchmarks
 {
     public CustomerDto Dto = CustomerDto.ValidCustomerDto;
