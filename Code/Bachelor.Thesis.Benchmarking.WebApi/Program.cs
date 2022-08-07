@@ -20,7 +20,7 @@ public class Program
 
         app.AddMappingsForDtoInsertionIntoDatabase();
 
-        app.MapGet("/", () => "Hello World!");
+        app.MapGet("/", () => "Hello World! 12:40 Uhr");
 
         app.Run();
     }

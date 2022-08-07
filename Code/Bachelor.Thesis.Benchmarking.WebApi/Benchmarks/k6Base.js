@@ -14,7 +14,8 @@ export const baseParams = {
     }
 };
 
-const baseUrl = "https://localhost:5001/api/";
+//const baseUrl = "https://localhost:5001/api/";
+const baseUrl = "https://sebi0810m-bachelorthesiswebapi.azurewebsites.net/api/";
 
 export const baseParametersPrimitiveTwoUrl = `${baseUrl}primitive/two/${__ENV.VALIDATION_NAME}`; // use with 'k6 run -e VALIDATION_NAME=xxxx ValidTest.js
 export const baseParametersPrimitiveAllUrl = `${baseUrl}primitive/all/${__ENV.VALIDATION_NAME}`;
