@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/bachelorthesis-webapidbserver/databases/Bachelor.Thesis.Benchmarking.WebApi_db",
+      "type": "mssql.azure",
+      "connectionId": "Database:connectionString",
+      "dynamicId": null
+    }
+  }
+}
