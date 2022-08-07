@@ -1,7 +1,6 @@
 ﻿using Bachelor.Thesis.Benchmarking.CollectionComplex.Dto;
 using Bachelor.Thesis.Benchmarking.CollectionComplex.FluentValidation;
 using Bachelor.Thesis.Benchmarking.CollectionComplex.LightValidation;
-using Microsoft.AspNetCore.Mvc;
 using Synnotech.DatabaseAbstractions;
 using Synnotech.Linq2Db;
 
