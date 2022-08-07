@@ -20,6 +20,8 @@ public class Program
 
         app.AddMappingsForDtoInsertionIntoDatabase();
 
+        app.MapGet("/", () => "Hello World!");
+
         app.Run();
     }
 }
