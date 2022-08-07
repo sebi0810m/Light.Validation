@@ -20,7 +20,7 @@ public class NoStringInCollectionBiggerThanAttribute : ValidationAttribute
         var invalid = strings.Where(s => s.Length > _length).ToArray();
         if (invalid.Length > 0)
         {
-            return new ValidationResult("The following strings exceed the value: " + string.Join(", ", invalid));
+            return new ValidationResult("The following strings exceed the value: " + string.Join(", ", invalid), new List<string>{ "Names.Value" });
         }
 
         return ValidationResult.Success;

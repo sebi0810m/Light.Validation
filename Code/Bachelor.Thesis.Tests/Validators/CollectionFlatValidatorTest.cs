@@ -4,11 +4,19 @@ using Bachelor.Thesis.Benchmarking.CollectionFlat;
 using Bachelor.Thesis.Benchmarking.CollectionFlat.Validators;
 using Light.GuardClauses;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Bachelor.Thesis.Tests.Validators;
 
 public class CollectionFlatValidatorTest
 {
+    private ITestOutputHelper _output;
+
+    public CollectionFlatValidatorTest(ITestOutputHelper output)
+    {
+        _output = output;
+    }
+
     private readonly CollectionFlatDto _valid = CollectionFlatDto.ValidDto;
     private readonly CollectionFlatDto _invalid = CollectionFlatDto.InvalidDto;
 
@@ -62,6 +70,10 @@ public class CollectionFlatValidatorTest
     {
         var errors = new List<ValidationResult>();
         var result = Validator.TryValidateObject(_invalid, new ValidationContext(_invalid), errors, true);
+
+        _output.WriteLine(Json.Serialize(_invalid));
+
+        _output.WriteLine(Json.Serialize(errors));
 
         result.MustBe(false);
     }

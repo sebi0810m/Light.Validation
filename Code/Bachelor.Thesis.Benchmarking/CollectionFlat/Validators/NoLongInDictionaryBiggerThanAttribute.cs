@@ -15,10 +15,10 @@ public class NoLongInDictionaryBiggerThanAttribute : ValidationAttribute
         if (dictionary == null)
             return ValidationResult.Success;
 
-        var invalid = dictionary.Where(l => l.Key > _maxValue).ToArray();
+        var invalid = dictionary.Keys.Where(l => l > _maxValue).ToArray();
         if (invalid.Length > 0)
         {
-            return new ValidationResult("The following keys exceed the value: " + string.Join(", ", invalid));
+            return new ValidationResult("The following keys exceed the value: " + string.Join(", ", invalid),new List<string> { "Availability.Key" });
         }
 
         return ValidationResult.Success;
