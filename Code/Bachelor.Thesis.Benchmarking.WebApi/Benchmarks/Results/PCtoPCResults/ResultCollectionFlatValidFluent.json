@@ -1,4 +1,0 @@
-{
-	"http_req_duration": {"values":{"avg":3.0167637567336323,"min":0,"med":1.0743,"max":29.6493,"p(90)":15.685519999999999,"p(95)":16.0595},"type":"trend","contains":"time"},
-"http_req_waiting": {"type":"trend","contains":"time","values":{"avg":2.767266163218053,"min":0,"med":0.5552,"max":29.6493,"p(90)":15.6313,"p(95)":16.0535}}
-}

@@ -2,9 +2,9 @@
 
 export const baseOptions = {
     stages: [
-        { duration: "2s", target: 5 }, // simulate ramp-up of traffic from 1 to 100 users over 20 seconds.
-        { duration: "5s", target: 5 }, // stay at 100 users for 3 minutes
-        { duration: "2s", target: 0 } // ramp-down to 0 users
+        { duration: "20s", target: 100 }, // simulate ramp-up of traffic from 1 to 100 users over 20 seconds.
+        { duration: "3m", target: 100 }, // stay at 100 users for 3 minutes
+        { duration: "20s", target: 0 } // ramp-down to 0 users
     ]
 };
 
@@ -14,7 +14,7 @@ export const baseParams = {
     }
 };
 
-const baseUrl = "https://localhost:7089/api/";
+const baseUrl = "https://localhost:5001/api/";
 
 export const baseParametersPrimitiveTwoUrl = `${baseUrl}primitive/two/${__ENV.VALIDATION_NAME}`; // use with 'k6 run -e VALIDATION_NAME=xxxx ValidTest.js
 export const baseParametersPrimitiveAllUrl = `${baseUrl}primitive/all/${__ENV.VALIDATION_NAME}`;
